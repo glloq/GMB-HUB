@@ -2,6 +2,7 @@ import { renderAboutPage } from './pages/about';
 import { renderBuildPage } from './pages/build';
 import { renderComparePage } from './pages/compare';
 import { renderFlashPage } from './pages/flash';
+import { renderGmbPage } from './pages/gmb';
 import { renderHomePage } from './pages/home';
 import { renderInstrumentsPage } from './pages/instruments';
 import { renderProjectPage } from './pages/project';
@@ -11,6 +12,7 @@ type Renderer = (outlet: HTMLElement, params?: Record<string, string>) => void;
 
 const routes: Array<{ pattern: RegExp; render: Renderer; keys?: string[] }> = [
   { pattern: /^#\/?$/, render: renderHomePage },
+  { pattern: /^#\/gmb\/?$/, render: renderGmbPage },
   { pattern: /^#\/instruments\/?$/, render: renderInstrumentsPage },
   { pattern: /^#\/instruments\/([^/]+)\/?$/, render: renderProjectPage, keys: ['id'] },
   { pattern: /^#\/projects\/([^/]+)\/?$/, render: renderProjectPage, keys: ['id'] },
