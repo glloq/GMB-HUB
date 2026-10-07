@@ -2,7 +2,7 @@
 
 **Explore the GMB ecosystem:** https://glloq.github.io/GMB-HUB/
 
-GMB HUB is the static portal for the **General MIDI Boop ecosystem**: mechanical MIDI instruments, GMB-compatible controllers, software, build resources, MIDI capabilities, hardware requirements, project repositories, and eventually direct ESP32 flashing from the browser.
+GMB HUB is the static portal for the **General MIDI Boop ecosystem**: mechanical MIDI instruments, GMB-compatible controllers, software, project resources, MIDI capabilities, hardware requirements, project repositories, and eventually direct ESP32 flashing from the browser.
 
 General MIDI Boop is the central orchestration system. GMB HUB presents the instruments and tools designed to work around it, so the whole ecosystem can be explored from one place.
 
@@ -25,7 +25,6 @@ If the generated `dist/` folder is copied to any static HTTP host, the site must
 - hardware, mechanics, actuators, sensors and power requirements
 - project maturity and hardware-validation status
 - links to the original GitHub repositories
-- comparison and build-assistant tools running entirely in the browser
 - preparation for direct ESP32 flashing with Web Serial/esptool-js
 
 ## Architecture
@@ -39,6 +38,6 @@ If the generated `dist/` folder is copied to any static HTTP host, the site must
 
 ## Current stage
 
-The catalog, GMB presentation, instrument pages, search/filtering, comparison tools and build assistant are already implemented. The current work focuses on improving the compact visual presentation, completing verified project data and media, and preparing validated firmware manifests for browser-side flashing.
+The catalog, GMB presentation, instrument pages, MIDI-capability audit and search/filtering are already implemented. The current work focuses on improving the compact visual presentation, completing verified project data and media, and preparing validated firmware manifests for browser-side flashing.
 
 See `docs/ROADMAP.md` and `docs/ARCHITECTURE.md`.
