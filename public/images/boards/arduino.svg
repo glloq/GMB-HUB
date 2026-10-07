@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 96" role="img" aria-labelledby="title desc">
+  <title id="title">Arduino board family</title><desc id="desc">Stylized development board used to represent Arduino-family controllers.</desc>
+  <rect width="160" height="96" rx="18" fill="#eff7f7"/>
+  <path d="M28 17h83l20 16v45H28z" fill="#178d98"/>
+  <rect x="42" y="28" width="46" height="28" rx="4" fill="#eaf0ed"/>
+  <rect x="95" y="25" width="19" height="16" rx="3" fill="#28343a"/>
+  <rect x="96" y="53" width="20" height="13" rx="2" fill="#c7d0d0"/>
+  <rect x="34" y="66" width="28" height="8" rx="2" fill="#263238"/>
+  <g fill="#d3aa43"><circle cx="36" cy="24" r="2.5"/><circle cx="36" cy="34" r="2.5"/><circle cx="36" cy="44" r="2.5"/><circle cx="36" cy="54" r="2.5"/><circle cx="120" cy="42" r="2.5"/><circle cx="120" cy="52" r="2.5"/><circle cx="120" cy="62" r="2.5"/></g>
+  <path d="M122 18h10v12h-10z" fill="#d8dede"/>
+</svg>

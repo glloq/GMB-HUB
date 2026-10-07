@@ -15,10 +15,14 @@ describe('capability badges', () => {
     expect(getMidiInputTransports(transports).map((item) => item.id)).toEqual(['usb-midi', 'ble-midi']);
   });
 
-  it('renders friendly board labels', () => {
-    const html = renderBoardBadges(['esp32-s3', 'arduino-leonardo'], true);
-    expect(html).toContain('ESP32-S3');
-    expect(html).toContain('Arduino Leonardo');
+  it('groups controller variants into visual board families', () => {
+    const html = renderBoardBadges(['esp32-s3', 'esp32-wroom-32', 'arduino-leonardo'], true);
+    expect(html).toContain('board-family--compact');
+    expect(html).toContain('images/boards/esp32.svg');
+    expect(html).toContain('images/boards/arduino.svg');
+    expect(html).toContain('ESP32 family');
+    expect(html).toContain('Arduino family');
+    expect(html.match(/images\/boards\/esp32\.svg/g)?.length).toBe(1);
   });
 
   it('renders MIDI reception badges and status styling', () => {

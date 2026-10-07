@@ -8,11 +8,11 @@ export function renderSoftwarePage(outlet: HTMLElement): void {
 
   outlet.innerHTML = `
     <section class="page-intro">
-      <p class="eyebrow">Ecosystem</p>
-      <h1>Software & generic controllers</h1>
-      <p>General MIDI Boop orchestrates the ensemble. Generic controllers such as PlayMode let builders create new mechanical instruments without maintaining a dedicated firmware for every simple actuator layout.</p>
+      <p class="eyebrow">GMB ecosystem</p>
+      <h1>Core system & controllers</h1>
+      <p>General MIDI Boop is the orchestra controller. Generic controllers extend the same ecosystem to new mechanical instruments.</p>
     </section>
-    <section class="section-block"><div class="section-heading"><h2>Software</h2></div><div class="project-grid">${software.map(renderProjectCard).join('')}</div></section>
-    <section class="section-block"><div class="section-heading"><h2>Generic controllers</h2></div><div class="project-grid">${controllers.map(renderProjectCard).join('')}</div></section>
+    <section class="section-block"><div class="section-heading"><h2>GMB core</h2></div><div class="project-grid project-grid--compact">${software.map(renderProjectCard).join('')}</div></section>
+    <section class="section-block"><div class="section-heading"><h2>Generic instrument controllers</h2></div><div class="project-grid project-grid--compact">${controllers.map(renderProjectCard).join('')}</div></section>
   `;
 }

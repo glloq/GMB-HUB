@@ -23,9 +23,9 @@ export function renderInstrumentsPage(outlet: HTMLElement): void {
 
   outlet.innerHTML = `
     <section class="page-intro">
-      <p class="eyebrow">Catalog</p>
-      <h1>Mechanical MIDI instruments</h1>
-      <p>Browse current projects, legacy builds and archived references. Boards and available MIDI inputs are visible directly on each project card.</p>
+      <p class="eyebrow">GMB orchestra modules</p>
+      <h1>Available instruments</h1>
+      <p>Choose a mechanical instrument for the GMB ecosystem. Hardware family, MIDI inputs and GMB status are visible at a glance.</p>
     </section>
 
     <section class="filters" aria-label="Catalog filters">
@@ -39,7 +39,7 @@ export function renderInstrumentsPage(outlet: HTMLElement): void {
     </section>
 
     <div class="results-bar"><strong id="catalog-count"></strong><button class="text-button" id="catalog-reset" type="button">Reset filters</button></div>
-    <section id="catalog-results" class="project-grid" aria-live="polite"></section>
+    <section id="catalog-results" class="project-grid project-grid--compact" aria-live="polite"></section>
   `;
 
   const results = outlet.querySelector<HTMLElement>('#catalog-results');
