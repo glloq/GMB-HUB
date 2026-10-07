@@ -4,11 +4,8 @@ const navItems = [
   ['Home', '#/'],
   ['GMB', '#/gmb'],
   ['Instruments', '#/instruments'],
-  ['Software', '#/software'],
   ['Build', '#/build'],
-  ['Compare', '#/compare'],
   ['Flash', '#/flash'],
-  ['About', '#/about'],
 ] as const;
 
 export function mountApp(root: HTMLDivElement | null): void {
