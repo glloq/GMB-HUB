@@ -1,0 +1,41 @@
+.gmb-hero { display: grid; grid-template-columns: minmax(0, .9fr) minmax(430px, 1.1fr); gap: 1rem; align-items: stretch; }
+.gmb-hero__copy { padding: 1rem 0; align-self: center; }
+.gmb-hero__copy h1 { max-width: 720px; margin: .2rem 0 .65rem; font-size: clamp(2rem, 4vw, 3.35rem); line-height: 1; letter-spacing: -.045em; }
+.gmb-hero__lede { max-width: 650px; margin: 0; color: var(--muted); font-size: .96rem; line-height: 1.5; }
+.gmb-hero__stats { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .75rem; }
+.gmb-hero__stats span { padding: .34rem .5rem; border: 1px solid var(--border); border-radius: .5rem; background: var(--surface); color: var(--muted); font-size: .72rem; }
+.gmb-hero__stats strong { color: var(--text); }
+
+.gmb-system { display: grid; grid-template-columns: minmax(110px, .8fr) auto minmax(170px, 1fr) auto minmax(110px, .8fr); gap: .45rem; align-items: center; padding: .75rem; border: 1px solid var(--border); border-radius: .85rem; background: var(--surface); }
+.gmb-system__inputs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .28rem; }
+.gmb-system__inputs span, .gmb-orchestra span { padding: .32rem .4rem; border: 1px solid var(--border); border-radius: .42rem; background: var(--bg); color: var(--muted); font-size: .66rem; text-align: center; }
+.gmb-system__arrow { color: var(--muted); font-size: 1.2rem; }
+.gmb-core { display: grid; gap: .16rem; min-height: 130px; align-content: center; padding: .85rem; border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--border)); border-radius: .72rem; background: color-mix(in srgb, var(--accent) 7%, var(--surface)); color: var(--text); text-align: center; text-decoration: none; }
+.gmb-core > span { font-size: 2rem; font-weight: 900; letter-spacing: -.05em; }
+.gmb-core strong { font-size: .9rem; }
+.gmb-core small { color: var(--muted); font-size: .64rem; }
+.gmb-orchestra { display: grid; gap: .28rem; }
+.gmb-orchestra strong { margin-bottom: .1rem; font-size: .82rem; text-align: center; }
+
+.instrument-module-section { margin-top: 1.6rem; }
+.project-grid--compact { grid-template-columns: repeat(auto-fit, minmax(min(100%, 225px), 1fr)); gap: .55rem; }
+.gmb-workflow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .45rem; margin-top: 1.4rem; }
+.gmb-workflow div { display: flex; align-items: center; gap: .5rem; padding: .55rem .65rem; border: 1px solid var(--border); border-radius: .55rem; background: var(--surface); font-size: .72rem; }
+.gmb-workflow b { display: grid; place-items: center; width: 22px; height: 22px; flex: 0 0 auto; border-radius: 50%; background: var(--bg); border: 1px solid var(--border); font-size: .64rem; }
+
+@media (max-width: 980px) {
+  .gmb-hero { grid-template-columns: 1fr; }
+  .gmb-system { grid-template-columns: minmax(110px, .8fr) auto minmax(170px, 1fr) auto minmax(110px, .8fr); }
+}
+
+@media (max-width: 720px) {
+  .gmb-system { grid-template-columns: 1fr; text-align: center; }
+  .gmb-system__arrow { transform: rotate(90deg); }
+  .gmb-system__inputs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .gmb-workflow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 480px) {
+  .gmb-system__inputs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gmb-workflow { grid-template-columns: 1fr; }
+}
