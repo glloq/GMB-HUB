@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 96" role="img" aria-labelledby="title desc">
+  <title id="title">Raspberry Pi board family</title><desc id="desc">Stylized single-board computer used to represent Raspberry Pi controllers.</desc>
+  <rect width="160" height="96" rx="18" fill="#f3f7f1"/>
+  <rect x="29" y="13" width="102" height="70" rx="9" fill="#4d8d54"/>
+  <rect x="49" y="29" width="40" height="30" rx="4" fill="#2c3335"/>
+  <rect x="96" y="27" width="20" height="14" rx="2" fill="#d4dad8"/>
+  <rect x="97" y="49" width="19" height="12" rx="2" fill="#d4dad8"/>
+  <rect x="36" y="67" width="24" height="9" rx="2" fill="#22292b"/>
+  <g fill="#d6b04a"><circle cx="39" cy="22" r="2"/><circle cx="47" cy="22" r="2"/><circle cx="55" cy="22" r="2"/><circle cx="63" cy="22" r="2"/><circle cx="71" cy="22" r="2"/><circle cx="79" cy="22" r="2"/><circle cx="87" cy="22" r="2"/><circle cx="95" cy="22" r="2"/><circle cx="103" cy="22" r="2"/><circle cx="111" cy="22" r="2"/></g>
+</svg>
