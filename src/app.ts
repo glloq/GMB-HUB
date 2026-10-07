@@ -2,6 +2,7 @@ import { renderRoute } from './router';
 
 const navItems = [
   ['Home', '#/'],
+  ['GMB', '#/gmb'],
   ['Instruments', '#/instruments'],
   ['Software', '#/software'],
   ['Build', '#/build'],
