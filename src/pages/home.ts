@@ -21,7 +21,6 @@ export function renderHomePage(outlet: HTMLElement): void {
         <div class="hero__actions">
           <a class="button" href="#/gmb">Explore General MIDI Boop</a>
           <a class="button button--secondary" href="#/instruments">Browse instruments</a>
-          <a class="button button--ghost" href="#/build">Choose a build</a>
         </div>
         <div class="gmb-hero__stats">
           <span><strong>${currentInstruments.length}</strong> current instruments</span>
