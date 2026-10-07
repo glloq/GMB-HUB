@@ -1,8 +1,8 @@
 import type { ProjectSummary } from '../models/project';
 import { escapeHtml, labelize } from '../utils/html';
+import { renderBoardBadges, renderMidiInputBadges } from './capability-badges';
 
 export function renderProjectCard(project: ProjectSummary): string {
-  const boards = project.controller.boardIds.map(labelize).join(' · ') || 'Board not documented';
   const gmb = project.gmb.state === 'native'
     ? `GMB${project.gmb.protocolVersion ? ` v${project.gmb.protocolVersion}` : ''}`
     : project.gmb.state === 'planned'
@@ -19,14 +19,21 @@ export function renderProjectCard(project: ProjectSummary): string {
         <div class="project-card__meta">
           <span class="badge">${escapeHtml(labelize(project.type))}</span>
           <span class="badge badge--muted">${escapeHtml(labelize(project.status.maturity))}</span>
+          <span class="badge badge--gmb">${escapeHtml(gmb)}</span>
         </div>
         <h2>${escapeHtml(project.name)}</h2>
-        <p>${escapeHtml(project.summary)}</p>
-        <dl class="project-card__facts">
-          <div><dt>Controller</dt><dd>${escapeHtml(boards)}</dd></div>
-          <div><dt>GMB</dt><dd>${escapeHtml(gmb)}</dd></div>
-        </dl>
-        <a class="button button--secondary" href="#/projects/${encodeURIComponent(project.id)}">View project</a>
+        <p class="project-card__summary">${escapeHtml(project.summary)}</p>
+        <div class="project-card__capabilities">
+          <div class="capability-group capability-group--compact">
+            <span class="capability-group__label">Boards</span>
+            <div class="capability-chips">${renderBoardBadges(project.controller.boardIds, true)}</div>
+          </div>
+          <div class="capability-group capability-group--compact">
+            <span class="capability-group__label">MIDI in</span>
+            <div class="capability-chips">${renderMidiInputBadges(project.midi.transports, true)}</div>
+          </div>
+        </div>
+        <a class="button button--secondary project-card__action" href="#/projects/${encodeURIComponent(project.id)}">View project</a>
       </div>
     </article>
   `;
