@@ -1,6 +1,6 @@
 import { renderProjectCard } from '../components/project-card';
-import type { ProjectSummary } from '../models/project';
 import { listProjects } from '../services/catalog';
+import { passesBuildRequirements, scoreBuildProject, type BuildPreferences } from '../services/build-recommendations';
 import { escapeHtml, labelize } from '../utils/html';
 
 function unique(values: string[]): string[] {
@@ -52,36 +52,27 @@ export function renderBuildPage(outlet: HTMLElement): void {
   const results = outlet.querySelector<HTMLElement>('#build-results');
   const heading = outlet.querySelector<HTMLElement>('#build-heading');
 
-  const passesRequirements = (project: ProjectSummary): boolean => {
-    if (family?.value && !project.families.includes(family.value)) return false;
-    if (tested?.checked && !['tested', 'partial'].includes(project.status.hardware)) return false;
-    return true;
-  };
-
-  const score = (project: ProjectSummary): number => {
-    let value = 0;
-    if (board?.value) value += project.controller.boardIds.includes(board.value) ? 8 : 0;
-    if (actuator?.value) value += project.actuators.some((item) => item.typeId === actuator.value) ? 8 : 0;
-    if (gmb?.checked) value += project.gmb.state === 'native' ? 10 : project.gmb.state === 'planned' ? 1 : 0;
-    if (modern?.checked) value += project.type === 'instrument' ? 6 : 0;
-    if (project.status.maturity === 'validated') value += 4;
-    if (project.status.maturity === 'hardware-tested') value += 3;
-    if (project.status.maturity === 'bench-ready') value += 2;
-    if (project.status.documentation === 'documented') value += 1;
-    return value;
-  };
+  const preferences = (): BuildPreferences => ({
+    family: family?.value ?? '',
+    board: board?.value ?? '',
+    actuator: actuator?.value ?? '',
+    preferNativeGmb: gmb?.checked ?? false,
+    preferModern: modern?.checked ?? false,
+    requireHardwareEvidence: tested?.checked ?? false,
+  });
 
   const render = (): void => {
     if (!results || !heading) return;
+    const selectedPreferences = preferences();
     const ranked = projects
-      .filter(passesRequirements)
-      .map((project) => ({ project, score: score(project) }))
+      .filter((project) => passesBuildRequirements(project, selectedPreferences))
+      .map((project) => ({ project, score: scoreBuildProject(project, selectedPreferences) }))
       .sort((a, b) => b.score - a.score || a.project.name.localeCompare(b.project.name))
       .slice(0, 8);
 
     heading.textContent = ranked.length ? `${ranked.length} best matches` : 'No suitable match';
     results.innerHTML = ranked.length
-      ? ranked.map(({ project, score: projectScore }) => `<div class="ranked-project"><div class="match-score">Match score ${projectScore}</div>${renderProjectCard(project)}</div>`).join('')
+      ? ranked.map(({ project, score }) => `<div class="ranked-project"><div class="match-score">Match score ${score}</div>${renderProjectCard(project)}</div>`).join('')
       : '<div class="empty-state"><h2>No matching project</h2><p>No catalog entry satisfies all required constraints. Relax a requirement or browse the full catalog.</p><a class="button button--secondary" href="#/instruments">Open catalog</a></div>';
   };
 
