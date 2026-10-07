@@ -6,6 +6,7 @@ import './styles/media.css';
 import './styles/capabilities.css';
 import './styles/compact.css';
 import './styles/ecosystem.css';
+import './styles/gmb.css';
 import './styles/palette.css';
 import { mountApp } from './app';
 

@@ -1,10 +1,10 @@
 {
   "id": "general-midi-boop",
   "name": "General MIDI Boop",
-  "shortName": null,
+  "shortName": "GMB",
   "type": "software",
-  "summary": "Offline-first Raspberry Pi MIDI orchestrator for DIY and off-the-shelf instruments.",
-  "description": null,
+  "summary": "Central Raspberry Pi orchestration system for discovering, adapting, arranging and playing a complete mechanical MIDI orchestra.",
+  "description": "General MIDI Boop is the control center of the GMB ecosystem rather than a simple MIDI player. It combines instrument discovery and GMB v2 capability descriptors, automatic channel assignment, note-range/polyphony/drum adaptation, multi-transport MIDI connectivity, live routing and virtual controls, latency-aware playback, loop and multitrack arrangement tools, instrument-oriented MIDI editing, optional local audio-to-MIDI transcription, and synchronized lighting/show control. The touch-friendly web interface is designed to run locally on a Raspberry Pi so an orchestra can operate without a cloud backend.",
   "repository": {
     "owner": "glloq",
     "name": "General-Midi-Boop",
@@ -22,14 +22,18 @@
   "supportedInstruments": [],
   "controller": {
     "boardIds": ["raspberry-pi"],
-    "notes": ["Runs standalone on Raspberry Pi 3B+/4/5 according to the project README."]
+    "notes": [
+      "Documented Raspberry Pi targets are 3B+, 4 and 5.",
+      "The host is designed as a local/offline-first appliance with a touch-friendly web interface.",
+      "The orchestration layer supports an orchestra of up to 16 instruments."
+    ]
   },
   "midi": {
     "transports": [
-      {"id":"usb-midi","status":"implemented","direction":"bidirectional","notes":"Automatic detection and hot-plug."},
-      {"id":"ble-midi","status":"implemented","direction":"bidirectional"},
-      {"id":"rtp-midi","status":"experimental","direction":"bidirectional","notes":"Current implementation is explicitly described as simplified and not fully AppleMIDI-conformant."},
-      {"id":"din-midi","status":"implemented","direction":"bidirectional","notes":"Physical MIDI over Raspberry Pi GPIO UART."}
+      {"id":"usb-midi","status":"implemented","direction":"bidirectional","notes":"Automatic discovery and hot-plug support are implemented; physical validation depends on host USB/ALSA hardware."},
+      {"id":"ble-midi","status":"implemented","direction":"bidirectional","notes":"Implemented through the host Bluetooth stack; requires the corresponding Raspberry Pi Bluetooth services."},
+      {"id":"rtp-midi","status":"experimental","direction":"bidirectional","notes":"Network MIDI is implemented but remains explicitly experimental and is not documented as complete AppleMIDI/RFC 6295 compliance."},
+      {"id":"din-midi","status":"implemented","direction":"bidirectional","notes":"Physical MIDI over Raspberry Pi GPIO UART at standard MIDI baud rate."}
     ],
     "messages": ["note-on","note-off","control-change","sysex","midi-clock"]
   },
@@ -39,21 +43,28 @@
     "automaticDiscovery": true,
     "capabilityDescriptor": true,
     "changeNotification": true,
-    "notes": ["This project is the GMB host/orchestrator; protocol fields describe the current instrument-recognition protocol it consumes."]
+    "notes": [
+      "This project is the GMB host/orchestrator; protocol fields describe the instrument-recognition and capability protocol it consumes.",
+      "The current codebase includes the v2 handshake, segmented descriptor transfer, capability resolution and descriptor-driven instrument configuration."
+    ]
   },
   "mechanics": {"summary":null,"axes":null,"requires3dPrinting":null,"requiresLaserCutting":null,"requiresCnc":null,"requiresWoodworking":null,"calibrationRequired":null,"homingRequired":null,"notes":[]},
   "actuators": [],
-  "drivers": [],
+  "drivers": ["GMB v2 descriptor protocol","USB MIDI","BLE MIDI","GPIO UART MIDI","RTP-MIDI","ArtNet DMX","sACN/E1.31","OSC","HTTP/WLED","MQTT","GPIO lighting","serial lighting"],
   "sensors": [],
-  "power": {"supplies":[],"notes":[]},
-  "capabilities": {"noteRange":null,"polyphony":16,"velocity":true,"aftertouch":null,"pitchBend":null,"supportedCC":[]},
+  "power": {"supplies":[],"notes":["Power requirements are those of the selected Raspberry Pi and attached MIDI/lighting interfaces; GMB is software, not an actuator power platform."]},
+  "capabilities": {"noteRange":null,"polyphony":null,"velocity":true,"aftertouch":null,"pitchBend":null,"supportedCC":[]},
   "build": {"difficulty":null,"estimatedCost":null,"estimatedBuildTimeHours":null,"tools":[]},
-  "resources": [{"kind":"repository","label":"GitHub repository","url":"https://github.com/glloq/General-Midi-Boop"}],
+  "resources": [
+    {"kind":"repository","label":"GitHub repository","url":"https://github.com/glloq/General-Midi-Boop"}
+  ],
   "documentation": [
     {"kind":"readme","label":"Project README","url":"https://github.com/glloq/General-Midi-Boop/blob/main/README.md"},
     {"kind":"documentation","label":"Installation guide","url":"https://github.com/glloq/General-Midi-Boop/blob/main/docs/INSTALLATION.md"},
     {"kind":"documentation","label":"Architecture","url":"https://github.com/glloq/General-Midi-Boop/blob/main/docs/ARCHITECTURE.md"},
-    {"kind":"documentation","label":"SysEx identity protocol","url":"https://github.com/glloq/General-Midi-Boop/blob/main/docs/SYSEX_IDENTITY.md"}
+    {"kind":"documentation","label":"GMB v2 SysEx identity and capability protocol","url":"https://github.com/glloq/General-Midi-Boop/blob/main/docs/SYSEX_IDENTITY.md"},
+    {"kind":"documentation","label":"Audio to MIDI transcription","url":"https://github.com/glloq/General-Midi-Boop/blob/main/docs/AUDIO_TRANSCRIPTION.md"},
+    {"kind":"documentation","label":"API reference","url":"https://github.com/glloq/General-Midi-Boop/blob/main/docs/API.md"}
   ],
   "firmware": {"available":false,"buildSystems":[],"sourcePath":null,"environments":[]},
   "flash": {"supported":false,"targets":[]},
@@ -69,5 +80,10 @@
   },
   "relations": {"replaces":[],"replacedBy":[],"related":["playmode-gmb","drums-engine-gmb","servo-flute-gmb","servo-plucked-strings-gmb","stepper-plucked-strings-gmb","servo-bowed-strings-gmb","stepper-bowed-strings-gmb","slide-whistle-gmb","servo-melodica-gmb","orchestrion-trumpet"]},
   "license": "MIT",
-  "warnings": ["RTP-MIDI is currently documented by the project as experimental/degraded rather than fully AppleMIDI-conformant."]
+  "warnings": [
+    "RTP-MIDI/network MIDI remains experimental and is not presented as complete AppleMIDI/RFC 6295 compatibility.",
+    "Hardware-dependent paths such as BLE, GPIO MIDI and Raspberry Pi GPIO lighting require validation on the target host and peripherals.",
+    "Lighting uses a multi-driver architecture; protocol/driver maturity depends on the selected backend and target environment.",
+    "The General MIDI Boop repository has historically bundled third-party web/audio/icon assets with licensing caveats; GMB HUB does not copy those assets and links only to project-owned interface screenshots."
+  ]
 }

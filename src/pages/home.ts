@@ -16,34 +16,40 @@ export function renderHomePage(outlet: HTMLElement): void {
     <section class="gmb-hero">
       <div class="gmb-hero__copy">
         <p class="eyebrow">General MIDI Boop ecosystem</p>
-        <h1>One simple system for a complete mechanical MIDI orchestra.</h1>
-        <p class="gmb-hero__lede">Choose an instrument, build it, connect it to GMB and let the orchestra handle routing, capabilities and playback.</p>
+        <h1>Build the instruments. GMB turns them into one orchestra.</h1>
+        <p class="gmb-hero__lede">General MIDI Boop is the central orchestration system: it discovers instrument capabilities, assigns and adapts MIDI parts, routes live sources, plays and arranges music, provides instrument-oriented MIDI editing, transcribes audio to MIDI and synchronizes lighting.</p>
         <div class="hero__actions">
-          <a class="button" href="#/instruments">Browse instruments</a>
-          <a class="button button--secondary" href="#/software">Open GMB</a>
+          <a class="button" href="#/gmb">Explore General MIDI Boop</a>
+          <a class="button button--secondary" href="#/instruments">Browse instruments</a>
           <a class="button button--ghost" href="#/build">Choose a build</a>
         </div>
         <div class="gmb-hero__stats">
           <span><strong>${currentInstruments.length}</strong> current instruments</span>
           <span><strong>${gmbReady}</strong> native GMB</span>
+          <span><strong>16</strong> instruments per orchestra</span>
         </div>
       </div>
 
       <div class="gmb-system" aria-label="General MIDI Boop ecosystem">
         <div class="gmb-system__inputs">
-          ${families.map((family) => `<span>${escapeHtml(labelize(family))}</span>`).join('')}
+          <span>USB MIDI</span>
+          <span>BLE MIDI</span>
+          <span>DIN / GPIO</span>
+          <span>Network MIDI</span>
+          <span>MIDI files</span>
+          <span>Audio → MIDI</span>
         </div>
         <div class="gmb-system__arrow">→</div>
-        <a class="gmb-core" href="#/projects/general-midi-boop">
+        <a class="gmb-core" href="#/gmb">
           <span>GMB</span>
           <strong>General MIDI Boop</strong>
-          <small>Detect · Route · Adapt · Play</small>
+          <small>Discover · Route · Adapt · Arrange · Edit · Perform · Light</small>
         </a>
         <div class="gmb-system__arrow">→</div>
         <div class="gmb-orchestra">
-          <strong>Orchestra</strong>
-          <span>One interface</span>
-          <span>Many instruments</span>
+          <strong>Mechanical orchestra</strong>
+          <span>${families.map((family) => escapeHtml(labelize(family))).join(' · ') || 'Many instrument families'}</span>
+          <span>One local interface</span>
         </div>
       </div>
     </section>
@@ -58,9 +64,10 @@ export function renderHomePage(outlet: HTMLElement): void {
 
     <section class="gmb-workflow section-block" aria-label="GMB workflow">
       <div><b>1</b><span>Build an instrument</span></div>
-      <div><b>2</b><span>Connect MIDI</span></div>
-      <div><b>3</b><span>GMB detects capabilities</span></div>
-      <div><b>4</b><span>Play the orchestra</span></div>
+      <div><b>2</b><span>Connect a MIDI source</span></div>
+      <div><b>3</b><span>GMB discovers capabilities</span></div>
+      <div><b>4</b><span>Assign & adapt parts</span></div>
+      <div><b>5</b><span>Play, arrange & light the orchestra</span></div>
     </section>
   `;
 }
