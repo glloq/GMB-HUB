@@ -12,6 +12,11 @@ interface BoardFamilyDefinition {
   image: string;
 }
 
+interface BoardFamilyGroup {
+  definition: BoardFamilyDefinition;
+  models: string[];
+}
+
 const BOARD_FAMILIES: Record<string, BoardFamilyDefinition> = {
   esp32: { id: 'esp32', label: 'ESP32 family', image: 'images/boards/esp32.svg' },
   'esp32-wroom-32': { id: 'esp32', label: 'ESP32 family', image: 'images/boards/esp32.svg' },
@@ -52,7 +57,7 @@ export function getMidiInputTransports(transports: MidiTransport[]): MidiTranspo
 export function renderBoardBadges(boardIds: string[], compact = false): string {
   if (!boardIds.length) return '<span class="capability-empty">Not documented</span>';
 
-  const families = new Map<string, { definition: BoardFamilyDefinition; models: string[] }>();
+  const families = new Map<string, BoardFamilyGroup>();
   const unknown: string[] = [];
 
   for (const boardId of boardIds) {
@@ -61,7 +66,7 @@ export function renderBoardBadges(boardIds: string[], compact = false): string {
       unknown.push(boardId);
       continue;
     }
-    const existing = families.get(family.id) ?? { definition: family, models: [] };
+    const existing: BoardFamilyGroup = families.get(family.id) ?? { definition: family, models: [] };
     existing.models.push(labelize(boardId));
     families.set(family.id, existing);
   }
