@@ -46,6 +46,16 @@ function powerRows(project: ProjectSummary): string {
   return `<div class="spec-list">${supplies}</div>${notes}`;
 }
 
+function projectMedia(project: ProjectSummary): string {
+  const items = [
+    ...(project.media.thumbnail ? [{ url: project.media.thumbnail, alt: project.name }] : []),
+    ...project.media.images.map((image) => ({ url: image.url, alt: image.alt ?? project.name })),
+  ];
+  const unique = items.filter((item, index, all) => all.findIndex((candidate) => candidate.url === item.url) === index).slice(0, 4);
+  if (!unique.length) return '';
+  return `<section class="project-media" aria-label="Project media">${unique.map((item, index) => `<figure class="project-media__item${index === 0 ? ' project-media__item--hero' : ''}"><img src="${escapeHtml(item.url)}" alt="${escapeHtml(item.alt)}" loading="${index === 0 ? 'eager' : 'lazy'}" decoding="async"></figure>`).join('')}</section>`;
+}
+
 export function renderProjectPage(outlet: HTMLElement, params: Record<string, string> = {}): void {
   const project = findProject(params.id ?? '');
   if (!project) {
@@ -80,6 +90,7 @@ export function renderProjectPage(outlet: HTMLElement, params: Record<string, st
         </div>
       </header>
 
+      ${projectMedia(project)}
       ${project.relations.replacedBy.length ? `<section class="replacement-notice"><p class="eyebrow">Recommended newer project</p><div>${relationLinks(project.relations.replacedBy)}</div></section>` : ''}
       ${project.warnings.length ? `<section class="warning-stack">${project.warnings.map((warning) => `<p><strong>Notice</strong> ${escapeHtml(warning)}</p>`).join('')}</section>` : ''}
 
