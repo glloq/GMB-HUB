@@ -1,3 +1,4 @@
+import { getMidiInputTransports } from '../components/capability-badges';
 import { renderProjectCard } from '../components/project-card';
 import type { ProjectSummary } from '../models/project';
 import { listProjects } from '../services/catalog';
@@ -16,6 +17,7 @@ export function renderInstrumentsPage(outlet: HTMLElement): void {
   const types = unique(projects.map((project) => project.type));
   const families = unique(projects.flatMap((project) => project.families));
   const boards = unique(projects.flatMap((project) => project.controller.boardIds));
+  const midiInputs = unique(projects.flatMap((project) => getMidiInputTransports(project.midi.transports).map((transport) => transport.id)));
   const maturities = unique(projects.map((project) => project.status.maturity));
   const gmbStates = unique(projects.map((project) => project.gmb.state));
 
@@ -23,7 +25,7 @@ export function renderInstrumentsPage(outlet: HTMLElement): void {
     <section class="page-intro">
       <p class="eyebrow">Catalog</p>
       <h1>Mechanical MIDI instruments</h1>
-      <p>Browse current projects, legacy builds and archived references. Legacy projects remain visible because they often contain useful mechanical ideas, tested hardware or fabrication resources.</p>
+      <p>Browse current projects, legacy builds and archived references. Boards and available MIDI inputs are visible directly on each project card.</p>
     </section>
 
     <section class="filters" aria-label="Catalog filters">
@@ -31,6 +33,7 @@ export function renderInstrumentsPage(outlet: HTMLElement): void {
       <label>Generation<select id="catalog-type">${optionList(types, 'All generations')}</select></label>
       <label>Family<select id="catalog-family">${optionList(families, 'All families')}</select></label>
       <label>Controller<select id="catalog-board">${optionList(boards, 'All controllers')}</select></label>
+      <label>MIDI input<select id="catalog-midi">${optionList(midiInputs, 'All MIDI inputs')}</select></label>
       <label>GMB<select id="catalog-gmb">${optionList(gmbStates, 'All GMB states')}</select></label>
       <label>Maturity<select id="catalog-maturity">${optionList(maturities, 'All maturity levels')}</select></label>
     </section>
@@ -45,19 +48,29 @@ export function renderInstrumentsPage(outlet: HTMLElement): void {
   const type = outlet.querySelector<HTMLSelectElement>('#catalog-type');
   const family = outlet.querySelector<HTMLSelectElement>('#catalog-family');
   const board = outlet.querySelector<HTMLSelectElement>('#catalog-board');
+  const midi = outlet.querySelector<HTMLSelectElement>('#catalog-midi');
   const gmb = outlet.querySelector<HTMLSelectElement>('#catalog-gmb');
   const maturity = outlet.querySelector<HTMLSelectElement>('#catalog-maturity');
   const reset = outlet.querySelector<HTMLButtonElement>('#catalog-reset');
 
   const applyFilters = (): void => {
-    if (!results || !count || !search || !type || !family || !board || !gmb || !maturity) return;
+    if (!results || !count || !search || !type || !family || !board || !midi || !gmb || !maturity) return;
     const query = search.value.trim().toLowerCase();
     const visible = projects.filter((project: ProjectSummary) => {
-      const haystack = [project.name, project.summary, ...project.supportedInstruments, ...project.families, ...project.controller.boardIds].join(' ').toLowerCase();
+      const projectMidiInputs = getMidiInputTransports(project.midi.transports).map((transport) => transport.id);
+      const haystack = [
+        project.name,
+        project.summary,
+        ...project.supportedInstruments,
+        ...project.families,
+        ...project.controller.boardIds,
+        ...projectMidiInputs,
+      ].join(' ').toLowerCase();
       return (!query || haystack.includes(query))
         && (!type.value || project.type === type.value)
         && (!family.value || project.families.includes(family.value))
         && (!board.value || project.controller.boardIds.includes(board.value))
+        && (!midi.value || projectMidiInputs.includes(midi.value))
         && (!gmb.value || project.gmb.state === gmb.value)
         && (!maturity.value || project.status.maturity === maturity.value);
     });
@@ -68,12 +81,12 @@ export function renderInstrumentsPage(outlet: HTMLElement): void {
       : '<div class="empty-state"><h2>No matching project</h2><p>Try removing one or more filters.</p></div>';
   };
 
-  [search, type, family, board, gmb, maturity].forEach((control) => {
+  [search, type, family, board, midi, gmb, maturity].forEach((control) => {
     control?.addEventListener(control instanceof HTMLInputElement ? 'input' : 'change', applyFilters);
   });
   reset?.addEventListener('click', () => {
     if (search) search.value = '';
-    [type, family, board, gmb, maturity].forEach((control) => { if (control) control.value = ''; });
+    [type, family, board, midi, gmb, maturity].forEach((control) => { if (control) control.value = ''; });
     applyFilters();
   });
   applyFilters();

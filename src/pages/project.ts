@@ -1,3 +1,4 @@
+import { renderBoardBadges, renderMidiInputBadges } from '../components/capability-badges';
 import { findProject } from '../services/catalog';
 import type { ProjectSummary } from '../models/project';
 import { escapeHtml, labelize } from '../utils/html';
@@ -83,6 +84,16 @@ export function renderProjectPage(outlet: HTMLElement, params: Record<string, st
           <h1>${escapeHtml(project.name)}</h1>
           <p class="hero__lede">${escapeHtml(project.summary)}</p>
           ${project.description ? `<p>${escapeHtml(project.description)}</p>` : ''}
+          <div class="quick-capabilities" aria-label="Compatible hardware and MIDI reception">
+            <div class="capability-group">
+              <span class="capability-group__label">Compatible boards</span>
+              <div class="capability-chips">${renderBoardBadges(project.controller.boardIds)}</div>
+            </div>
+            <div class="capability-group">
+              <span class="capability-group__label">MIDI reception</span>
+              <div class="capability-chips">${renderMidiInputBadges(project.midi.transports)}</div>
+            </div>
+          </div>
         </div>
         <div class="hero__actions">
           <a class="button" href="${escapeHtml(project.repository.url)}" target="_blank" rel="noreferrer">GitHub repository</a>
@@ -107,7 +118,7 @@ export function renderProjectPage(outlet: HTMLElement, params: Record<string, st
         <h2>What you can build</h2>
         <div class="detail-grid">
           <section class="detail-card"><h3>Supported instruments</h3><ul>${list(project.supportedInstruments)}</ul></section>
-          <section class="detail-card"><h3>Controller boards</h3><ul>${list(project.controller.boardIds)}</ul></section>
+          <section class="detail-card"><h3>Compatible boards</h3><div class="capability-chips">${renderBoardBadges(project.controller.boardIds)}</div></section>
           <section class="detail-card"><h3>Manufacturing</h3><ul>${list(manufacture, 'No required manufacturing method documented')}</ul></section>
           <section class="detail-card"><h3>Build difficulty</h3><p>${escapeHtml(project.build.difficulty ? labelize(project.build.difficulty) : 'Unknown')}</p><ul>${list(project.build.tools, 'Required tools not documented')}</ul></section>
         </div>
@@ -142,8 +153,9 @@ export function renderProjectPage(outlet: HTMLElement, params: Record<string, st
 
       <section class="two-column-section">
         <div class="detail-section">
-          <p class="eyebrow">MIDI</p><h2>Connectivity & messages</h2>
-          <div class="spec-list">${project.midi.transports.length ? project.midi.transports.map((transport) => `<div class="spec-row"><div><strong>${escapeHtml(labelize(transport.id))}</strong><span>${escapeHtml(labelize(transport.status))}</span></div><div>${escapeHtml(labelize(transport.direction))}</div></div>`).join('') : '<p class="muted">No MIDI transport documented.</p>'}</div>
+          <p class="eyebrow">MIDI</p><h2>Reception & messages</h2>
+          <div class="capability-chips capability-chips--detail">${renderMidiInputBadges(project.midi.transports)}</div>
+          <div class="spec-list midi-transport-list">${project.midi.transports.length ? project.midi.transports.map((transport) => `<div class="spec-row"><div><strong>${escapeHtml(labelize(transport.id))}</strong><span>${escapeHtml(labelize(transport.status))}</span></div><div>${escapeHtml(labelize(transport.direction))}</div></div>`).join('') : '<p class="muted">No MIDI transport documented.</p>'}</div>
           <h3>Messages</h3><ul>${list(project.midi.messages)}</ul>
         </div>
         <div class="detail-section">
