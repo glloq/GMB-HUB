@@ -1,0 +1,308 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glloq.github.io/GMB-HUB/schema/project.schema.json",
+  "title": "GMB HUB project",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "type", "summary", "repository", "status"],
+  "$defs": {
+    "nullableString": { "type": ["string", "null"] },
+    "nullableBoolean": { "type": ["boolean", "null"] },
+    "nullableNumber": { "type": ["number", "null"] },
+    "evidence": { "enum": ["unknown", "planned", "implemented", "tested", "not-tested", "partial", "documented"] },
+    "link": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "label", "url"],
+      "properties": {
+        "kind": { "type": "string" },
+        "label": { "type": "string" },
+        "url": { "type": "string", "format": "uri" },
+        "notes": { "$ref": "#/$defs/nullableString" }
+      }
+    },
+    "media": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url"],
+      "properties": {
+        "url": { "type": "string" },
+        "alt": { "$ref": "#/$defs/nullableString" },
+        "source": { "$ref": "#/$defs/nullableString" },
+        "provenance": { "$ref": "#/$defs/nullableString" }
+      }
+    }
+  },
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "name": { "type": "string", "minLength": 1 },
+    "shortName": { "$ref": "#/$defs/nullableString" },
+    "type": { "enum": ["instrument", "controller", "software", "utility", "legacy", "archive"] },
+    "summary": { "type": "string", "minLength": 1 },
+    "description": { "$ref": "#/$defs/nullableString" },
+    "repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owner", "name", "url", "visibility"],
+      "properties": {
+        "owner": { "type": "string" },
+        "name": { "type": "string" },
+        "url": { "type": "string", "format": "uri" },
+        "visibility": { "enum": ["public", "private", "unknown"] }
+      }
+    },
+    "status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maturity", "software", "hardware", "documentation", "gmb"],
+      "properties": {
+        "maturity": { "enum": ["concept", "software-ready", "bench-ready", "hardware-tested", "validated", "legacy", "archived"] },
+        "software": { "$ref": "#/$defs/evidence" },
+        "hardware": { "$ref": "#/$defs/evidence" },
+        "documentation": { "$ref": "#/$defs/evidence" },
+        "gmb": { "$ref": "#/$defs/evidence" }
+      }
+    },
+    "families": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "supportedInstruments": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "controller": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["boardIds", "notes"],
+      "properties": {
+        "boardIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "midi": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["transports", "messages"],
+      "properties": {
+        "transports": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "status", "direction"],
+            "properties": {
+              "id": { "type": "string" },
+              "status": { "enum": ["unknown", "planned", "implemented", "experimental", "legacy", "unsupported"] },
+              "direction": { "enum": ["input", "output", "bidirectional", "unknown"] },
+              "notes": { "$ref": "#/$defs/nullableString" }
+            }
+          }
+        },
+        "messages": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      }
+    },
+    "gmb": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "protocolVersion", "automaticDiscovery", "capabilityDescriptor", "changeNotification", "notes"],
+      "properties": {
+        "state": { "enum": ["native", "partial", "planned", "legacy", "none", "unknown"] },
+        "protocolVersion": { "type": ["integer", "null"], "minimum": 1 },
+        "automaticDiscovery": { "$ref": "#/$defs/nullableBoolean" },
+        "capabilityDescriptor": { "$ref": "#/$defs/nullableBoolean" },
+        "changeNotification": { "$ref": "#/$defs/nullableBoolean" },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "mechanics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary", "axes", "requires3dPrinting", "requiresLaserCutting", "requiresCnc", "requiresWoodworking", "calibrationRequired", "homingRequired", "notes"],
+      "properties": {
+        "summary": { "$ref": "#/$defs/nullableString" },
+        "axes": { "type": ["integer", "null"], "minimum": 0 },
+        "requires3dPrinting": { "$ref": "#/$defs/nullableBoolean" },
+        "requiresLaserCutting": { "$ref": "#/$defs/nullableBoolean" },
+        "requiresCnc": { "$ref": "#/$defs/nullableBoolean" },
+        "requiresWoodworking": { "$ref": "#/$defs/nullableBoolean" },
+        "calibrationRequired": { "$ref": "#/$defs/nullableBoolean" },
+        "homingRequired": { "$ref": "#/$defs/nullableBoolean" },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "actuators": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["typeId", "quantity", "role"],
+        "properties": {
+          "typeId": { "type": "string" },
+          "quantity": { "type": ["integer", "null"], "minimum": 0 },
+          "role": { "type": "string" },
+          "driver": { "$ref": "#/$defs/nullableString" },
+          "notes": { "$ref": "#/$defs/nullableString" }
+        }
+      }
+    },
+    "drivers": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "sensors": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "power": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["supplies", "notes"],
+      "properties": {
+        "supplies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["label", "voltageV", "currentA"],
+            "properties": {
+              "label": { "type": "string" },
+              "voltageV": { "$ref": "#/$defs/nullableNumber" },
+              "currentA": { "$ref": "#/$defs/nullableNumber" },
+              "notes": { "$ref": "#/$defs/nullableString" }
+            }
+          }
+        },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["noteRange", "polyphony", "velocity", "aftertouch", "pitchBend", "supportedCC"],
+      "properties": {
+        "noteRange": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["min", "max"],
+              "properties": { "min": { "type": "integer", "minimum": 0, "maximum": 127 }, "max": { "type": "integer", "minimum": 0, "maximum": 127 } }
+            }
+          ]
+        },
+        "polyphony": { "type": ["integer", "null"], "minimum": 1 },
+        "velocity": { "$ref": "#/$defs/nullableBoolean" },
+        "aftertouch": { "$ref": "#/$defs/nullableBoolean" },
+        "pitchBend": { "$ref": "#/$defs/nullableBoolean" },
+        "supportedCC": { "type": "array", "items": { "type": "integer", "minimum": 0, "maximum": 127 }, "uniqueItems": true }
+      }
+    },
+    "build": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["difficulty", "estimatedCost", "estimatedBuildTimeHours", "tools"],
+      "properties": {
+        "difficulty": { "enum": ["beginner", "intermediate", "advanced", "expert", null] },
+        "estimatedCost": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["currency", "min", "max"],
+              "properties": {
+                "currency": { "type": "string" },
+                "min": { "$ref": "#/$defs/nullableNumber" },
+                "max": { "$ref": "#/$defs/nullableNumber" },
+                "notes": { "$ref": "#/$defs/nullableString" }
+              }
+            }
+          ]
+        },
+        "estimatedBuildTimeHours": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["min", "max"],
+              "properties": { "min": { "$ref": "#/$defs/nullableNumber" }, "max": { "$ref": "#/$defs/nullableNumber" } }
+            }
+          ]
+        },
+        "tools": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      }
+    },
+    "resources": { "type": "array", "items": { "$ref": "#/$defs/link" } },
+    "documentation": { "type": "array", "items": { "$ref": "#/$defs/link" } },
+    "firmware": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["available", "buildSystems", "sourcePath", "environments"],
+      "properties": {
+        "available": { "type": "boolean" },
+        "buildSystems": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "sourcePath": { "$ref": "#/$defs/nullableString" },
+        "environments": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      }
+    },
+    "flash": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["supported", "targets"],
+      "properties": {
+        "supported": { "type": "boolean" },
+        "targets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "boardId", "chip", "buildEnvironment", "version", "files"],
+            "properties": {
+              "id": { "type": "string" },
+              "boardId": { "type": "string" },
+              "chip": { "type": "string" },
+              "buildEnvironment": { "$ref": "#/$defs/nullableString" },
+              "version": { "$ref": "#/$defs/nullableString" },
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["path", "address", "sha256"],
+                  "properties": {
+                    "path": { "type": "string" },
+                    "address": { "type": "string" },
+                    "sha256": { "$ref": "#/$defs/nullableString" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "postFlash": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["localUrl", "setupSsidPattern", "steps"],
+      "properties": {
+        "localUrl": { "$ref": "#/$defs/nullableString" },
+        "setupSsidPattern": { "$ref": "#/$defs/nullableString" },
+        "steps": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "media": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["thumbnail", "images", "videos"],
+      "properties": {
+        "thumbnail": { "$ref": "#/$defs/nullableString" },
+        "images": { "type": "array", "items": { "$ref": "#/$defs/media" } },
+        "videos": { "type": "array", "items": { "$ref": "#/$defs/media" } }
+      }
+    },
+    "relations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["replaces", "replacedBy", "related"],
+      "properties": {
+        "replaces": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "replacedBy": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "related": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      }
+    },
+    "license": { "$ref": "#/$defs/nullableString" },
+    "warnings": { "type": "array", "items": { "type": "string" } }
+  }
+}

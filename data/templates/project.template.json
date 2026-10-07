@@ -1,0 +1,100 @@
+{
+  "id": "project-id",
+  "name": "Project name",
+  "shortName": null,
+  "type": "instrument",
+  "summary": "Short user-facing summary.",
+  "description": null,
+  "repository": {
+    "owner": "glloq",
+    "name": "Repository-Name",
+    "url": "https://github.com/glloq/Repository-Name",
+    "visibility": "public"
+  },
+  "status": {
+    "maturity": "concept",
+    "software": "unknown",
+    "hardware": "unknown",
+    "documentation": "unknown",
+    "gmb": "unknown"
+  },
+  "families": [],
+  "supportedInstruments": [],
+  "controller": {
+    "boardIds": [],
+    "notes": []
+  },
+  "midi": {
+    "transports": [],
+    "messages": []
+  },
+  "gmb": {
+    "state": "unknown",
+    "protocolVersion": null,
+    "automaticDiscovery": null,
+    "capabilityDescriptor": null,
+    "changeNotification": null,
+    "notes": []
+  },
+  "mechanics": {
+    "summary": null,
+    "axes": null,
+    "requires3dPrinting": null,
+    "requiresLaserCutting": null,
+    "requiresCnc": null,
+    "requiresWoodworking": null,
+    "calibrationRequired": null,
+    "homingRequired": null,
+    "notes": []
+  },
+  "actuators": [],
+  "drivers": [],
+  "sensors": [],
+  "power": {
+    "supplies": [],
+    "notes": []
+  },
+  "capabilities": {
+    "noteRange": null,
+    "polyphony": null,
+    "velocity": null,
+    "aftertouch": null,
+    "pitchBend": null,
+    "supportedCC": []
+  },
+  "build": {
+    "difficulty": null,
+    "estimatedCost": null,
+    "estimatedBuildTimeHours": null,
+    "tools": []
+  },
+  "resources": [],
+  "documentation": [],
+  "firmware": {
+    "available": false,
+    "buildSystems": [],
+    "sourcePath": null,
+    "environments": []
+  },
+  "flash": {
+    "supported": false,
+    "targets": []
+  },
+  "postFlash": {
+    "localUrl": null,
+    "setupSsidPattern": null,
+    "steps": []
+  },
+  "media": {
+    "thumbnail": null,
+    "images": [],
+    "videos": []
+  },
+  "relations": {
+    "replaces": [],
+    "replacedBy": [],
+    "related": []
+  },
+  "license": null,
+  "warnings": []
+}
