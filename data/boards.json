@@ -3,6 +3,7 @@
   { "id": "esp32-wroom-32", "label": "ESP32-WROOM-32", "family": "ESP32" },
   { "id": "esp32-s2", "label": "ESP32-S2", "family": "ESP32" },
   { "id": "esp32-s3", "label": "ESP32-S3", "family": "ESP32" },
+  { "id": "arduino-uno", "label": "Arduino Uno", "family": "Arduino" },
   { "id": "arduino-leonardo", "label": "Arduino Leonardo", "family": "Arduino" },
   { "id": "arduino-micro", "label": "Arduino Micro", "family": "Arduino" },
   { "id": "raspberry-pi", "label": "Raspberry Pi", "family": "Raspberry Pi" }
