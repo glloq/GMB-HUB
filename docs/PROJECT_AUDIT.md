@@ -21,25 +21,22 @@ This file tracks the evidence used by GMB HUB. It is not a claim that every list
 | Accordion-servo-midi | accordion | software-ready | not tested | planned | Current active firmware remains ATmega32U4-based. |
 | 16-cords-lyre-midi | legacy plucked strings | validated | tested | none | Repository explicitly describes the physical project as functional and finished. |
 | stepper-midi-4-cords-instrument | legacy plucked strings | legacy | unknown | none | Replaced in the HUB by Stepper-Plucked-Strings-GMB for new builds. |
+| Continuous_PluckStepper | legacy plucked strings | legacy | unknown | none | Exploratory predecessor to the modern stepper architecture. |
+| ukulele_stepper_motor | legacy plucked strings | legacy | unknown | none | Earlier dedicated stepper ukulele design. |
 | ukuletron | legacy plucked strings | legacy/WIP | partial | none | Useful solenoid-fret mechanical reference; synchronization and heat concerns remain documented. |
+| Orchestrion_Plucked_Strings_Solenoids | legacy plucked strings | legacy | not tested | none | Code compiles, hardware explicitly untested; thermal management remains a design concern. |
 | Orchestrion_Piano | legacy keyboard | legacy | not tested | none | Code compiles, but repository explicitly says no physical validation was performed. |
 | MidiUSB-MCP23017-Piano | archived keyboard | archived | unknown | none | Repository explicitly marks the project inactive. |
 | Orchestrion-Xylophone | legacy percussion | legacy | unknown | legacy SysEx identification | Code described as functional, larger range still needs rework. |
 | pipeOrgan | legacy concept | concept | not tested | none | Explicitly a collection of design ideas. |
 | servo-midi-music | legacy generic servo controller | legacy | not tested | none | Code complete according to README, hardware not tested. |
 | Solenoid-Midi-Music | legacy generic solenoid controller | legacy | unknown | none | Generic 1–128 solenoid reference; PlayMode is preferred for new generic builds. |
+| servo-flute | legacy wind | legacy | unknown | none | Pre-GMB Arduino/Micro generation; replaced by Servo-Flute-GMB for new builds. |
 
-## Not published to the public catalog yet
+## Not published to the public catalog
 
 - `midi-hand-pinao`: repository is currently private. Do not copy private repository content into this public repository without an explicit publication decision.
-
-## Remaining legacy/reference audit queue
-
-- Orchestrion_Plucked_Strings_Solenoids
-- Continuous_PluckStepper
-- ukulele_stepper_motor
-- servo-flute
-- Orchestrion-Project
+- `Orchestrion-Project`: historical umbrella/meta repository describing the older ecosystem. It is useful provenance, but it is not an instrument and should not appear as an instrument card.
 
 ## Audit checklist per repository
 
