@@ -13,7 +13,7 @@
     "typecheck": "tsc --noEmit",
     "validate:data": "node scripts/validate-data.mjs",
     "lint": "eslint src vite.config.ts --max-warnings=0",
-    "test": "vitest run --passWithNoTests",
+    "test": "vitest run",
     "verify": "npm run validate:data && npm run lint && npm run typecheck && npm run test"
   },
   "devDependencies": {
