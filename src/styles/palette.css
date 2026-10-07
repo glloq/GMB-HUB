@@ -1,0 +1,102 @@
+html {
+  background:
+    radial-gradient(circle at 18% -10%, color-mix(in srgb, var(--purple) 16%, transparent) 0, transparent 28rem),
+    radial-gradient(circle at 92% 8%, color-mix(in srgb, var(--cyan) 11%, transparent) 0, transparent 24rem),
+    var(--bg);
+}
+
+body { background: transparent; }
+
+.site-header {
+  position: relative;
+}
+.site-header::after {
+  content: '';
+  position: absolute;
+  left: 1.25rem;
+  right: 1.25rem;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 55%, var(--border)), color-mix(in srgb, var(--cyan) 35%, var(--border)), transparent);
+}
+.brand { color: var(--text); }
+.brand span { color: var(--cyan); }
+nav a:hover { background: color-mix(in srgb, var(--accent) 10%, var(--surface)); color: var(--text); }
+
+.eyebrow { color: var(--cyan); }
+.button {
+  background: linear-gradient(135deg, var(--accent), #6574ea);
+  border-color: transparent;
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+.button--secondary { background: var(--surface-2); border-color: var(--border); box-shadow: none; }
+.button--ghost { background: transparent; box-shadow: none; }
+
+.project-card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--surface-2) 72%, var(--surface)), var(--surface));
+  border-color: var(--border);
+}
+.project-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: var(--family-color, var(--accent));
+}
+.project-card:hover {
+  border-color: color-mix(in srgb, var(--family-color, var(--accent)) 48%, var(--border));
+  box-shadow: 0 12px 30px color-mix(in srgb, var(--family-color, var(--accent)) 9%, transparent);
+}
+.project-card[data-family='wind'] { --family-color: var(--cyan); }
+.project-card[data-family='plucked-string'] { --family-color: var(--orange); }
+.project-card[data-family='bowed-string'] { --family-color: var(--purple); }
+.project-card[data-family='keyboard'] { --family-color: var(--blue); }
+.project-card[data-family='percussion'] { --family-color: var(--pink); }
+.project-card[data-family='brass'] { --family-color: var(--yellow); }
+.project-card[data-family='organ'] { --family-color: var(--green); }
+.project-card[data-family='experimental'] { --family-color: var(--red); }
+.project-card[data-family='generic'] { --family-color: var(--accent); }
+
+.project-card__media--placeholder {
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--family-color, var(--accent)) 18%, var(--surface-2)), var(--surface));
+}
+.project-card__media--placeholder span { color: color-mix(in srgb, var(--family-color, var(--accent)) 86%, white); }
+.project-card__heading h2 a:hover { color: var(--family-color, var(--accent)); }
+
+.badge--gmb {
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  border-color: color-mix(in srgb, var(--accent) 38%, var(--border));
+  color: #cbd2ff;
+}
+.project-card[data-gmb='native'] .badge--gmb {
+  background: color-mix(in srgb, var(--green) 12%, var(--surface));
+  border-color: color-mix(in srgb, var(--green) 42%, var(--border));
+  color: #a9ecc0;
+}
+.project-card[data-gmb='planned'] .badge--gmb {
+  background: color-mix(in srgb, var(--yellow) 10%, var(--surface));
+  border-color: color-mix(in srgb, var(--yellow) 35%, var(--border));
+  color: #f1d98a;
+}
+
+.filters, .compare-picker, .build-assistant, .detail-section, .detail-card, .status-grid div, .steps {
+  background: color-mix(in srgb, var(--surface) 94%, var(--accent) 6%);
+}
+.filters input:focus, .filters select:focus, .compare-picker select:focus, .build-assistant select:focus {
+  border-color: var(--cyan);
+}
+
+.status-grid div:nth-child(1) { border-top: 2px solid var(--accent); }
+.status-grid div:nth-child(2) { border-top: 2px solid var(--green); }
+.status-grid div:nth-child(3) { border-top: 2px solid var(--orange); }
+.status-grid div:nth-child(4) { border-top: 2px solid var(--blue); }
+.status-grid div:nth-child(5) { border-top: 2px solid var(--cyan); }
+
+.warning-stack p { background: color-mix(in srgb, var(--orange) 7%, var(--surface)); border-color: color-mix(in srgb, var(--orange) 45%, var(--border)); }
+.replacement-notice { background: color-mix(in srgb, var(--accent) 7%, var(--surface)); }
+.gmb-panel { background: color-mix(in srgb, var(--cyan) 5%, var(--surface)); }
+
+.site-footer { border-top: 1px solid color-mix(in srgb, var(--border) 80%, transparent); }

@@ -2,17 +2,26 @@
 .capability-group__label { color: var(--muted); font-size: .6rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
 .capability-chips { display: flex; flex-wrap: wrap; align-items: center; gap: .28rem; min-width: 0; }
 
-.board-family { display: inline-flex; align-items: center; gap: .45rem; min-height: 38px; padding: .2rem .5rem .2rem .2rem; border: 1px solid var(--border); border-radius: .58rem; background: var(--bg); color: var(--text); font-size: .72rem; font-weight: 750; }
+.board-family { display: inline-flex; align-items: center; gap: .45rem; min-height: 38px; padding: .2rem .5rem .2rem .2rem; border: 1px solid var(--border); border-radius: .58rem; background: var(--surface-2); color: var(--text); font-size: .72rem; font-weight: 750; }
 .board-family img { display: block; width: 52px; height: 31px; object-fit: cover; border-radius: .42rem; }
+.board-family--esp32 { border-color: color-mix(in srgb, var(--cyan) 45%, var(--border)); background: color-mix(in srgb, var(--cyan) 7%, var(--surface)); }
+.board-family--arduino { border-color: color-mix(in srgb, var(--blue) 45%, var(--border)); background: color-mix(in srgb, var(--blue) 7%, var(--surface)); }
+.board-family--raspberry-pi { border-color: color-mix(in srgb, var(--pink) 42%, var(--border)); background: color-mix(in srgb, var(--pink) 6%, var(--surface)); }
 .board-family--compact { width: 48px; min-height: 30px; padding: 0; overflow: hidden; border-radius: .45rem; }
 .board-family--compact img { width: 48px; height: 30px; border-radius: .38rem; }
 .board-family--compact > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
 
-.capability-chip { display: inline-flex; align-items: center; gap: .32rem; min-height: 28px; padding: .2rem .42rem .2rem .26rem; border: 1px solid var(--border); border-radius: .45rem; background: var(--bg); color: var(--text); font-size: .7rem; font-weight: 750; white-space: nowrap; }
+.capability-chip { display: inline-flex; align-items: center; gap: .32rem; min-height: 28px; padding: .2rem .42rem .2rem .26rem; border: 1px solid var(--border); border-radius: .45rem; background: var(--surface-2); color: var(--text); font-size: .7rem; font-weight: 750; white-space: nowrap; }
 .capability-chip b { display: inline-grid; place-items: center; min-width: 23px; height: 20px; padding: 0 .2rem; border-radius: .3rem; background: var(--surface); border: 1px solid var(--border); font-size: .56rem; line-height: 1; }
 .capability-chip--board { border-color: color-mix(in srgb, var(--accent) 30%, var(--border)); }
 .capability-chip--midi { padding-right: .36rem; }
-.capability-chip--midi b { background: color-mix(in srgb, var(--accent) 12%, var(--surface)); border-color: color-mix(in srgb, var(--accent) 25%, var(--border)); }
+.capability-chip--midi b { background: transparent; border-color: transparent; }
+.capability-chip--usb-midi, .capability-chip--midi-usb { border-color: color-mix(in srgb, var(--blue) 45%, var(--border)); background: color-mix(in srgb, var(--blue) 9%, var(--surface)); color: #b8d8ff; }
+.capability-chip--ble-midi { border-color: color-mix(in srgb, var(--purple) 48%, var(--border)); background: color-mix(in srgb, var(--purple) 9%, var(--surface)); color: #d2c2ff; }
+.capability-chip--din-midi { border-color: color-mix(in srgb, var(--orange) 45%, var(--border)); background: color-mix(in srgb, var(--orange) 9%, var(--surface)); color: #ffd0a7; }
+.capability-chip--rtp-midi { border-color: color-mix(in srgb, var(--cyan) 45%, var(--border)); background: color-mix(in srgb, var(--cyan) 9%, var(--surface)); color: #a4efe6; }
+.capability-chip--wifi-udp { border-color: color-mix(in srgb, var(--green) 45%, var(--border)); background: color-mix(in srgb, var(--green) 9%, var(--surface)); color: #b3edc8; }
+.capability-chip--serial-midi { border-color: color-mix(in srgb, var(--yellow) 45%, var(--border)); background: color-mix(in srgb, var(--yellow) 8%, var(--surface)); color: #f6df9d; }
 .capability-chip--experimental { border-style: dashed; }
 .capability-chip--experimental::after { content: 'exp'; color: var(--muted); font-size: .52rem; font-weight: 800; text-transform: uppercase; }
 .capability-chip--legacy { opacity: .68; }
