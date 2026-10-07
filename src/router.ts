@@ -1,4 +1,3 @@
-import { renderBuildPage } from './pages/build';
 import { renderFlashPage } from './pages/flash';
 import { renderGmbPage } from './pages/gmb';
 import { renderHomePage } from './pages/home';
@@ -14,7 +13,6 @@ const routes: Array<{ pattern: RegExp; render: Renderer; keys?: string[] }> = [
   { pattern: /^#\/instruments\/?$/, render: renderInstrumentsPage },
   { pattern: /^#\/instruments\/([^/]+)\/?$/, render: renderProjectPage, keys: ['id'] },
   { pattern: /^#\/projects\/([^/]+)\/?$/, render: renderProjectPage, keys: ['id'] },
-  { pattern: /^#\/build\/?$/, render: renderBuildPage },
   { pattern: /^#\/flash\/?$/, render: renderFlashPage },
 ];
 
