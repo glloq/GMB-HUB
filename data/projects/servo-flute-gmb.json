@@ -1,0 +1,50 @@
+{
+  "id": "servo-flute-gmb",
+  "name": "Servo Flute GMB",
+  "shortName": null,
+  "type": "instrument",
+  "summary": "Modular ESP32 controller for robotic flutes and other hole-fingered wind instruments.",
+  "description": null,
+  "repository": {"owner":"glloq","name":"Servo-Flute-GMB","url":"https://github.com/glloq/Servo-Flute-GMB","visibility":"public"},
+  "status": {"maturity":"bench-ready","software":"tested","hardware":"not-tested","documentation":"documented","gmb":"tested"},
+  "families": ["wind"],
+  "supportedInstruments": ["recorder","tin-whistle","ocarina","native-american-flute","transverse-flute","bansuri","dizi","fife","shakuhachi","ney","kaval"],
+  "controller": {"boardIds":["esp32-wroom-32"],"notes":["Project README recommends an ESP32-WROOM development board for the first build."]},
+  "midi": {
+    "transports": [
+      {"id":"ble-midi","status":"implemented","direction":"bidirectional"},
+      {"id":"rtp-midi","status":"implemented","direction":"bidirectional"},
+      {"id":"din-midi","status":"implemented","direction":"input","notes":"Serial MIDI DIN is receive-only on the documented board and cannot answer GMB discovery."},
+      {"id":"web-keyboard","status":"implemented","direction":"input"},
+      {"id":"local-midi-file","status":"implemented","direction":"input"}
+    ],
+    "messages": ["note-on","note-off","control-change","sysex"]
+  },
+  "gmb": {"state":"native","protocolVersion":2,"automaticDiscovery":true,"capabilityDescriptor":true,"changeNotification":true,"notes":["Descriptor is derived from the active validated configuration; HTTP descriptor is also exposed in Wi-Fi mode."]},
+  "mechanics": {"summary":"Servo fingers close instrument holes while a configurable air-management chain supplies and regulates airflow.","axes":null,"requires3dPrinting":null,"requiresLaserCutting":null,"requiresCnc":null,"requiresWoodworking":null,"calibrationRequired":true,"homingRequired":false,"notes":["Supports multiple air architectures: solenoid, servo valve, fan, pumps or reservoir systems."]},
+  "actuators": [
+    {"typeId":"servo","quantity":null,"role":"Finger actuation and optional airflow control","driver":"PCA9685","notes":"Up to 31 finger servo channels are documented across one or two PCA9685 boards."},
+    {"typeId":"solenoid","quantity":null,"role":"Optional air valve","driver":"MOSFET","notes":null},
+    {"typeId":"blower","quantity":null,"role":"Optional continuous air source","driver":"PWM","notes":null},
+    {"typeId":"pump","quantity":null,"role":"Optional pump or reservoir air source","driver":null,"notes":null}
+  ],
+  "drivers": ["PCA9685","logic-level MOSFET"],
+  "sensors": ["INMP441 microphone (optional)","ToF sensor (optional)","Hall sensor (optional)","end stops (optional)"],
+  "power": {"supplies":[{"label":"Servo supply","voltageV":5,"currentA":null,"notes":"Dedicated regulated actuator supply; do not power multiple servos from the ESP32 5 V pin."}],"notes":["ESP32, PCA9685 and actuator supply grounds must be common.","Inductive loads require appropriate flyback protection and fused actuator power."]},
+  "capabilities": {"noteRange":null,"polyphony":1,"velocity":true,"aftertouch":null,"pitchBend":null,"supportedCC":[]},
+  "build": {"difficulty":null,"estimatedCost":null,"estimatedBuildTimeHours":null,"tools":[]},
+  "resources": [{"kind":"repository","label":"GitHub repository","url":"https://github.com/glloq/Servo-Flute-GMB"}],
+  "documentation": [
+    {"kind":"readme","label":"Project README","url":"https://github.com/glloq/Servo-Flute-GMB/blob/main/README.md"},
+    {"kind":"documentation","label":"Configuration","url":"https://github.com/glloq/Servo-Flute-GMB/blob/main/docs/CONFIGURATION.md"},
+    {"kind":"documentation","label":"Air management","url":"https://github.com/glloq/Servo-Flute-GMB/blob/main/docs/AIR_MANAGEMENT.md"},
+    {"kind":"documentation","label":"GMB protocol","url":"https://github.com/glloq/Servo-Flute-GMB/blob/main/docs/GMB_PROTOCOL.md"}
+  ],
+  "firmware": {"available":true,"buildSystems":["PlatformIO"],"sourcePath":".","environments":[]},
+  "flash": {"supported":false,"targets":[]},
+  "postFlash": {"localUrl":"http://servo-flute.local","setupSsidPattern":"ServoFlute-Setup","steps":["Restart the ESP32.","Select Wi-Fi mode.","Connect to ServoFlute-Setup on first boot.","Open the captive portal or http://192.168.4.1.","Select an instrument preset, map servos and calibrate finger and airflow values."]},
+  "media": {"thumbnail":null,"images":[],"videos":[]},
+  "relations": {"replaces":["servo-flute-v3"],"replacedBy":[],"related":["general-midi-boop"]},
+  "license": null,
+  "warnings": ["Physical PCA9685, servo, pump, fan, valve, sensor and microphone validation is explicitly still pending in the project documentation."]
+}

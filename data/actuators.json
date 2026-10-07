@@ -1,0 +1,11 @@
+[
+  { "id": "servo", "label": "Servo" },
+  { "id": "solenoid", "label": "Solenoid" },
+  { "id": "stepper", "label": "Stepper motor" },
+  { "id": "dc-motor", "label": "DC motor" },
+  { "id": "pneumatic", "label": "Pneumatic actuator" },
+  { "id": "blower", "label": "Blower / fan" },
+  { "id": "pump", "label": "Pump" },
+  { "id": "speaker", "label": "Speaker / acoustic driver" },
+  { "id": "other", "label": "Other" }
+]

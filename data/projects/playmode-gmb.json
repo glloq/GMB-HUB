@@ -1,0 +1,45 @@
+{
+  "id": "playmode-gmb",
+  "name": "PlayMode GMB",
+  "shortName": null,
+  "type": "controller",
+  "summary": "No-code ESP32 controller for building mechanical MIDI instruments from servos and solenoids.",
+  "description": null,
+  "repository": {"owner":"glloq","name":"PlayMode-GMB","url":"https://github.com/glloq/PlayMode-GMB","visibility":"public"},
+  "status": {"maturity":"software-ready","software":"implemented","hardware":"not-tested","documentation":"documented","gmb":"implemented"},
+  "families": ["generic","keyboard","percussion"],
+  "supportedInstruments": ["mechanical-piano","xylophone","bells","percussion","generic-servo-instrument","generic-solenoid-instrument"],
+  "controller": {"boardIds":["esp32-wroom-32"],"notes":["README targets ESP32-WROOM-32D and describes two independent I2C buses."]},
+  "midi": {
+    "transports": [
+      {"id":"din-midi","status":"implemented","direction":"bidirectional","notes":"MIDI OUT is required for automatic GMB recognition over a wired connection."},
+      {"id":"wifi-udp","status":"implemented","direction":"bidirectional"},
+      {"id":"rtp-midi","status":"implemented","direction":"bidirectional"}
+    ],
+    "messages": ["note-on","note-off","control-change","sysex"]
+  },
+  "gmb": {"state":"native","protocolVersion":2,"automaticDiscovery":true,"capabilityDescriptor":true,"changeNotification":null,"notes":["Descriptor is derived from the active configuration."]},
+  "mechanics": {"summary":"Generic actuator controller: the user defines logical instruments and maps servo or solenoid behaviours to physical mechanisms.","axes":null,"requires3dPrinting":null,"requiresLaserCutting":null,"requiresCnc":null,"requiresWoodworking":null,"calibrationRequired":true,"homingRequired":false,"notes":["Mechanics depend on the instrument built around PlayMode."]},
+  "actuators": [
+    {"typeId":"servo","quantity":null,"role":"Configurable strike, alternate, strum or key behaviours","driver":"PCA9685","notes":"Up to 128 PWM outputs across two buses depending on configuration."},
+    {"typeId":"solenoid","quantity":null,"role":"Configurable strike or hit-and-hold behaviours","driver":"PCA9685","notes":"Shares the configurable output budget with servos."}
+  ],
+  "drivers": ["PCA9685"],
+  "sensors": ["INMP441 microphone (optional)"],
+  "power": {"supplies":[],"notes":["Reference design separates 5-6 V servo power and 12-24 V solenoid power and uses a common ground star point."]},
+  "capabilities": {"noteRange":null,"polyphony":null,"velocity":null,"aftertouch":null,"pitchBend":null,"supportedCC":[]},
+  "build": {"difficulty":null,"estimatedCost":null,"estimatedBuildTimeHours":null,"tools":[]},
+  "resources": [{"kind":"repository","label":"GitHub repository","url":"https://github.com/glloq/PlayMode-GMB"}],
+  "documentation": [
+    {"kind":"readme","label":"Project README","url":"https://github.com/glloq/PlayMode-GMB/blob/main/README.md"},
+    {"kind":"documentation","label":"GMB v2 protocol","url":"https://github.com/glloq/PlayMode-GMB/blob/main/docs/gmb-v2.md"},
+    {"kind":"documentation","label":"Web interface","url":"https://github.com/glloq/PlayMode-GMB/blob/main/docs/web-interface.md"}
+  ],
+  "firmware": {"available":true,"buildSystems":["PlatformIO"],"sourcePath":".","environments":[]},
+  "flash": {"supported":false,"targets":[]},
+  "postFlash": {"localUrl":"http://play-mode.local","setupSsidPattern":"play-mode-XXXXXX","steps":["Restart the ESP32.","Connect to the setup access point.","Open http://192.168.4.1.","Create the instrument configuration.","Validate wiring and actuator tests before full-power operation."]},
+  "media": {"thumbnail":null,"images":[],"videos":[]},
+  "relations": {"replaces":[],"replacedBy":[],"related":["general-midi-boop"]},
+  "license": null,
+  "warnings": ["Project README explicitly labels the current project beta and not hardware-tested."]
+}

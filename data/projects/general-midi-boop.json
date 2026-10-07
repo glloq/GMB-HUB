@@ -1,0 +1,73 @@
+{
+  "id": "general-midi-boop",
+  "name": "General MIDI Boop",
+  "shortName": null,
+  "type": "software",
+  "summary": "Offline-first Raspberry Pi MIDI orchestrator for DIY and off-the-shelf instruments.",
+  "description": null,
+  "repository": {
+    "owner": "glloq",
+    "name": "General-Midi-Boop",
+    "url": "https://github.com/glloq/General-Midi-Boop",
+    "visibility": "public"
+  },
+  "status": {
+    "maturity": "software-ready",
+    "software": "implemented",
+    "hardware": "unknown",
+    "documentation": "documented",
+    "gmb": "implemented"
+  },
+  "families": ["software"],
+  "supportedInstruments": [],
+  "controller": {
+    "boardIds": ["raspberry-pi"],
+    "notes": ["Runs standalone on Raspberry Pi 3B+/4/5 according to the project README."]
+  },
+  "midi": {
+    "transports": [
+      {"id":"usb-midi","status":"implemented","direction":"bidirectional","notes":"Automatic detection and hot-plug."},
+      {"id":"ble-midi","status":"implemented","direction":"bidirectional"},
+      {"id":"rtp-midi","status":"experimental","direction":"bidirectional","notes":"Current implementation is explicitly described as simplified and not fully AppleMIDI-conformant."},
+      {"id":"din-midi","status":"implemented","direction":"bidirectional","notes":"Physical MIDI over Raspberry Pi GPIO UART."}
+    ],
+    "messages": ["note-on","note-off","control-change","sysex","midi-clock"]
+  },
+  "gmb": {
+    "state": "native",
+    "protocolVersion": 2,
+    "automaticDiscovery": true,
+    "capabilityDescriptor": true,
+    "changeNotification": true,
+    "notes": ["This project is the GMB host/orchestrator; protocol fields describe the current instrument-recognition protocol it consumes."]
+  },
+  "mechanics": {"summary":null,"axes":null,"requires3dPrinting":null,"requiresLaserCutting":null,"requiresCnc":null,"requiresWoodworking":null,"calibrationRequired":null,"homingRequired":null,"notes":[]},
+  "actuators": [],
+  "drivers": [],
+  "sensors": [],
+  "power": {"supplies":[],"notes":[]},
+  "capabilities": {"noteRange":null,"polyphony":16,"velocity":true,"aftertouch":null,"pitchBend":null,"supportedCC":[]},
+  "build": {"difficulty":null,"estimatedCost":null,"estimatedBuildTimeHours":null,"tools":[]},
+  "resources": [{"kind":"repository","label":"GitHub repository","url":"https://github.com/glloq/General-Midi-Boop"}],
+  "documentation": [
+    {"kind":"readme","label":"Project README","url":"https://github.com/glloq/General-Midi-Boop/blob/main/README.md"},
+    {"kind":"documentation","label":"Installation guide","url":"https://github.com/glloq/General-Midi-Boop/blob/main/docs/INSTALLATION.md"},
+    {"kind":"documentation","label":"Architecture","url":"https://github.com/glloq/General-Midi-Boop/blob/main/docs/ARCHITECTURE.md"},
+    {"kind":"documentation","label":"SysEx identity protocol","url":"https://github.com/glloq/General-Midi-Boop/blob/main/docs/SYSEX_IDENTITY.md"}
+  ],
+  "firmware": {"available":false,"buildSystems":[],"sourcePath":null,"environments":[]},
+  "flash": {"supported":false,"targets":[]},
+  "postFlash": {"localUrl":null,"setupSsidPattern":null,"steps":[]},
+  "media": {
+    "thumbnail":"https://raw.githubusercontent.com/glloq/General-Midi-Boop/main/docs/images/accueil.png",
+    "images":[
+      {"url":"https://raw.githubusercontent.com/glloq/General-Midi-Boop/main/docs/images/accueil.png","alt":"General MIDI Boop main interface","source":"glloq/General-Midi-Boop","provenance":"docs/images/accueil.png"},
+      {"url":"https://raw.githubusercontent.com/glloq/General-Midi-Boop/main/docs/images/editeur.png","alt":"General MIDI Boop MIDI editor","source":"glloq/General-Midi-Boop","provenance":"docs/images/editeur.png"},
+      {"url":"https://raw.githubusercontent.com/glloq/General-Midi-Boop/main/docs/images/lumiere.png","alt":"General MIDI Boop lighting interface","source":"glloq/General-Midi-Boop","provenance":"docs/images/lumiere.png"}
+    ],
+    "videos":[]
+  },
+  "relations": {"replaces":[],"replacedBy":[],"related":["playmode-gmb","drums-engine-gmb","servo-flute-gmb","servo-plucked-strings-gmb","stepper-plucked-strings-gmb","servo-bowed-strings-gmb","stepper-bowed-strings-gmb","slide-whistle-gmb","servo-melodica-gmb","orchestrion-trumpet"]},
+  "license": "MIT",
+  "warnings": ["RTP-MIDI is currently documented by the project as experimental/degraded rather than fully AppleMIDI-conformant."]
+}

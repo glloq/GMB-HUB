@@ -1,0 +1,12 @@
+[
+  { "id": "keyboard", "label": "Keyboard" },
+  { "id": "plucked-string", "label": "Plucked strings" },
+  { "id": "bowed-string", "label": "Bowed strings" },
+  { "id": "wind", "label": "Wind" },
+  { "id": "brass", "label": "Brass" },
+  { "id": "percussion", "label": "Percussion" },
+  { "id": "organ", "label": "Organ" },
+  { "id": "experimental", "label": "Experimental" },
+  { "id": "generic", "label": "Generic controller" },
+  { "id": "software", "label": "Software" }
+]
