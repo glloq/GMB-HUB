@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 96" role="img" aria-labelledby="title desc">
+  <title id="title">ESP32 board family</title><desc id="desc">Stylized development board used to represent ESP32-family controllers.</desc>
+  <rect width="160" height="96" rx="18" fill="#eef4f6"/>
+  <rect x="28" y="12" width="104" height="72" rx="10" fill="#17343a"/>
+  <rect x="48" y="22" width="64" height="38" rx="5" fill="#c9d5d7"/>
+  <rect x="57" y="29" width="46" height="24" rx="3" fill="#8b999d"/>
+  <rect x="64" y="66" width="32" height="10" rx="2" fill="#222d31"/>
+  <g fill="#d8b14f">
+    <rect x="18" y="18" width="12" height="4" rx="1"/><rect x="18" y="29" width="12" height="4" rx="1"/><rect x="18" y="40" width="12" height="4" rx="1"/><rect x="18" y="51" width="12" height="4" rx="1"/><rect x="18" y="62" width="12" height="4" rx="1"/><rect x="18" y="73" width="12" height="4" rx="1"/>
+    <rect x="130" y="18" width="12" height="4" rx="1"/><rect x="130" y="29" width="12" height="4" rx="1"/><rect x="130" y="40" width="12" height="4" rx="1"/><rect x="130" y="51" width="12" height="4" rx="1"/><rect x="130" y="62" width="12" height="4" rx="1"/><rect x="130" y="73" width="12" height="4" rx="1"/>
+  </g>
+  <path d="M106 18h18v18h-18z" fill="#f4f7f7" opacity=".7"/>
+</svg>
