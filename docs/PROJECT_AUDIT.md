@@ -19,22 +19,22 @@ This file tracks the evidence used by GMB HUB. It is not a claim that every list
 | Orchestrion_trumpet | brass | bench-ready | not tested | planned | Software is explicitly ahead of bench validation. |
 | harmonica_Midi | wind | concept | not tested | planned | Physical project remains explicitly described as an idea. |
 | Accordion-servo-midi | accordion | software-ready | not tested | planned | Current active firmware remains ATmega32U4-based. |
+| 16-cords-lyre-midi | legacy plucked strings | validated | tested | none | Repository explicitly describes the physical project as functional and finished. |
+| stepper-midi-4-cords-instrument | legacy plucked strings | legacy | unknown | none | Replaced in the HUB by Stepper-Plucked-Strings-GMB for new builds. |
+| ukuletron | legacy plucked strings | legacy/WIP | partial | none | Useful solenoid-fret mechanical reference; synchronization and heat concerns remain documented. |
+| Orchestrion_Piano | legacy keyboard | legacy | not tested | none | Code compiles, but repository explicitly says no physical validation was performed. |
+| MidiUSB-MCP23017-Piano | archived keyboard | archived | unknown | none | Repository explicitly marks the project inactive. |
+| Orchestrion-Xylophone | legacy percussion | legacy | unknown | legacy SysEx identification | Code described as functional, larger range still needs rework. |
+| pipeOrgan | legacy concept | concept | not tested | none | Explicitly a collection of design ideas. |
+| servo-midi-music | legacy generic servo controller | legacy | not tested | none | Code complete according to README, hardware not tested. |
+| Solenoid-Midi-Music | legacy generic solenoid controller | legacy | unknown | none | Generic 1–128 solenoid reference; PlayMode is preferred for new generic builds. |
 
 ## Not published to the public catalog yet
 
 - `midi-hand-pinao`: repository is currently private. Do not copy private repository content into this public repository without an explicit publication decision.
 
-## Legacy/reference audit queue
+## Remaining legacy/reference audit queue
 
-- 16-cords-lyre-midi
-- stepper-midi-4-cords-instrument
-- ukuletron
-- Orchestrion_Piano
-- MidiUSB-MCP23017-Piano
-- servo-midi-music
-- Solenoid-Midi-Music
-- Orchestrion-Xylophone
-- pipeOrgan
 - Orchestrion_Plucked_Strings_Solenoids
 - Continuous_PluckStepper
 - ukulele_stepper_motor
