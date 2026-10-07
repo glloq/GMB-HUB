@@ -44,7 +44,7 @@
   "flash": {"supported":false,"targets":[]},
   "postFlash": {"localUrl":"http://servo-flute.local","setupSsidPattern":"ServoFlute-Setup","steps":["Restart the ESP32.","Select Wi-Fi mode.","Connect to ServoFlute-Setup on first boot.","Open the captive portal or http://192.168.4.1.","Select an instrument preset, map servos and calibrate finger and airflow values."]},
   "media": {"thumbnail":null,"images":[],"videos":[]},
-  "relations": {"replaces":[],"replacedBy":[],"related":["general-midi-boop"]},
+  "relations": {"replaces":["servo-flute-v3"],"replacedBy":[],"related":["general-midi-boop"]},
   "license": null,
   "warnings": ["Physical PCA9685, servo, pump, fan, valve, sensor and microphone validation is explicitly still pending in the project documentation."]
 }
