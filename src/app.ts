@@ -4,7 +4,6 @@ const navItems = [
   ['Home', '#/'],
   ['GMB', '#/gmb'],
   ['Instruments', '#/instruments'],
-  ['Build', '#/build'],
   ['Flash', '#/flash'],
 ] as const;
 
