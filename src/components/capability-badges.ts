@@ -74,7 +74,7 @@ export function renderBoardBadges(boardIds: string[], compact = false): string {
   const familyMarkup = [...families.values()].map(({ definition, models }) => {
     const src = `${import.meta.env.BASE_URL}${definition.image}`;
     const title = `${definition.label}: ${models.join(', ')}`;
-    return `<span class="board-family${compact ? ' board-family--compact' : ''}" title="${escapeHtml(title)}"><img src="${escapeHtml(src)}" alt="${escapeHtml(definition.label)}" loading="lazy" decoding="async"><span>${escapeHtml(definition.label)}</span></span>`;
+    return `<span class="board-family board-family--${escapeHtml(definition.id)}${compact ? ' board-family--compact' : ''}" title="${escapeHtml(title)}"><img src="${escapeHtml(src)}" alt="${escapeHtml(definition.label)}" loading="lazy" decoding="async"><span>${escapeHtml(definition.label)}</span></span>`;
   }).join('');
 
   const fallbackMarkup = unknown.map((id) => {
@@ -96,6 +96,7 @@ export function renderMidiInputBadges(transports: MidiTransport[], compact = fal
         ? ' capability-chip--legacy'
         : '';
     const title = `${badge.label} · ${labelize(transport.status)} · ${labelize(transport.direction)}`;
-    return `<span class="capability-chip capability-chip--midi${statusClass}${compact ? ' capability-chip--compact' : ''}" title="${escapeHtml(title)}"><b>${escapeHtml(badge.token)}</b><span>${escapeHtml(badge.label)}</span></span>`;
+    const midiClass = ` capability-chip--${transport.id.replace(/[^a-z0-9-]/gi, '-').toLowerCase()}`;
+    return `<span class="capability-chip capability-chip--midi${midiClass}${statusClass}${compact ? ' capability-chip--compact' : ''}" title="${escapeHtml(title)}"><b>${escapeHtml(badge.token)}</b><span>${escapeHtml(badge.label)}</span></span>`;
   }).join('');
 }
