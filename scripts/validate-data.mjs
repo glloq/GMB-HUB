@@ -14,11 +14,12 @@ const ids = (records, label) => {
   return seen;
 };
 
-const [schema, categories, boards, actuators] = await Promise.all([
+const [schema, categories, boards, actuators, midiAudit] = await Promise.all([
   readJson('schema/project.schema.json'),
   readJson('data/categories.json'),
   readJson('data/boards.json'),
   readJson('data/actuators.json'),
+  readJson('data/midi-capabilities.json'),
 ]);
 
 const categoryIds = ids(categories, 'categories');
@@ -56,5 +57,33 @@ for (const project of projects) {
   }
 }
 
+const midiStatuses = new Set(['supported', 'unsupported', 'dynamic', 'optional', 'unknown']);
+const midiMessageKeys = new Set([
+  'noteOn', 'noteOff', 'controlChange', 'programChange', 'pitchBend',
+  'channelAftertouch', 'polyAftertouch', 'clock', 'start', 'continue', 'stop', 'systemReset',
+]);
+const auditedProjects = Object.entries(midiAudit.projects ?? {});
+for (const [projectId, audit] of auditedProjects) {
+  if (!projectIds.has(projectId)) throw new Error(`midi-capabilities: unknown project ${projectId}`);
+  if (!audit || typeof audit !== 'object') throw new Error(`midi-capabilities: ${projectId} must be an object`);
+  for (const [message, status] of Object.entries(audit.messageSupport ?? {})) {
+    if (!midiMessageKeys.has(message)) throw new Error(`midi-capabilities: ${projectId} unknown MIDI message key ${message}`);
+    if (!midiStatuses.has(status)) throw new Error(`midi-capabilities: ${projectId}.${message} invalid status ${status}`);
+  }
+  const ccSeen = new Set();
+  for (const cc of audit.supportedCC ?? []) {
+    if (!Number.isInteger(cc) || cc < 0 || cc > 127) throw new Error(`midi-capabilities: ${projectId} invalid CC ${cc}`);
+    if (ccSeen.has(cc)) throw new Error(`midi-capabilities: ${projectId} duplicate CC ${cc}`);
+    ccSeen.add(cc);
+  }
+  const featureIds = new Set();
+  for (const feature of audit.features ?? []) {
+    if (!feature?.id || !feature?.label) throw new Error(`midi-capabilities: ${projectId} feature requires id and label`);
+    if (featureIds.has(feature.id)) throw new Error(`midi-capabilities: ${projectId} duplicate feature ${feature.id}`);
+    if (!midiStatuses.has(feature.status)) throw new Error(`midi-capabilities: ${projectId}.${feature.id} invalid status ${feature.status}`);
+    featureIds.add(feature.id);
+  }
+}
+
 if (process.exitCode) process.exit(process.exitCode);
-console.log(`GMB HUB data valid: ${projects.length} project record(s), ${boards.length} boards, ${actuators.length} actuator types.`);
+console.log(`GMB HUB data valid: ${projects.length} project record(s), ${boards.length} boards, ${actuators.length} actuator types, ${auditedProjects.length} audited MIDI profiles.`);
