@@ -1,6 +1,7 @@
 import { renderBoardBadges, renderMidiInputBadges } from '../components/capability-badges';
 import { findProject } from '../services/catalog';
-import type { ProjectSummary } from '../models/project';
+import { getMidiCapabilityAudit, getMidiCapabilityAuditDate, midiCapabilityLabel } from '../services/midi-capabilities';
+import type { MidiCapabilityStatus, ProjectSummary } from '../models/project';
 import { escapeHtml, labelize } from '../utils/html';
 
 function list(items: string[], empty = 'Not documented'): string {
@@ -55,6 +56,81 @@ function projectMedia(project: ProjectSummary): string {
   const unique = items.filter((item, index, all) => all.findIndex((candidate) => candidate.url === item.url) === index).slice(0, 4);
   if (!unique.length) return '';
   return `<section class="project-media" aria-label="Project media">${unique.map((item, index) => `<figure class="project-media__item${index === 0 ? ' project-media__item--hero' : ''}"><img src="${escapeHtml(item.url)}" alt="${escapeHtml(item.alt)}" loading="${index === 0 ? 'eager' : 'lazy'}" decoding="async"></figure>`).join('')}</section>`;
+}
+
+const messageFields = [
+  ['noteOn', 'Note On'],
+  ['noteOff', 'Note Off'],
+  ['controlChange', 'Control Change'],
+  ['programChange', 'Program Change'],
+  ['pitchBend', 'Pitch Bend'],
+  ['channelAftertouch', 'Channel Aftertouch'],
+  ['polyAftertouch', 'Poly Aftertouch'],
+  ['clock', 'Clock'],
+  ['start', 'Start'],
+  ['continue', 'Continue'],
+  ['stop', 'Stop'],
+  ['systemReset', 'System Reset'],
+] as const;
+
+function statusBadge(status: MidiCapabilityStatus): string {
+  return `<span class="midi-state midi-state--${status}">${escapeHtml(midiCapabilityLabel(status))}</span>`;
+}
+
+function renderAuditedMidi(project: ProjectSummary): string {
+  const audit = getMidiCapabilityAudit(project.id);
+  if (!audit) {
+    return `<h3>Messages</h3><ul>${list(project.midi.messages)}</ul>`;
+  }
+
+  const rows = messageFields.map(([key, label]) => {
+    const status = audit.messageSupport[key] ?? 'unknown';
+    return `<div class="midi-message-row"><span>${escapeHtml(label)}</span>${statusBadge(status)}</div>`;
+  }).join('');
+
+  const features = audit.features.length
+    ? `<div class="midi-feature-grid">${audit.features.map((feature) => `
+        <div class="midi-feature-card">
+          <div><strong>${escapeHtml(feature.label)}</strong>${feature.notes ? `<small>${escapeHtml(feature.notes)}</small>` : ''}</div>
+          ${statusBadge(feature.status)}
+        </div>`).join('')}</div>`
+    : '<p class="muted">No optional MIDI/mechanical features were identified in this audit.</p>';
+
+  const ccText = audit.supportedCC.length
+    ? audit.supportedCC.join(', ')
+    : audit.messageSupport.controlChange === 'dynamic'
+      ? 'Dynamic / configuration-dependent'
+      : 'No fixed CC list established';
+
+  return `
+    <div class="midi-audit-heading">
+      <h3>Audited message support</h3>
+      <small>Runtime-code audit · ${escapeHtml(getMidiCapabilityAuditDate())}</small>
+    </div>
+    <div class="midi-message-grid">${rows}</div>
+    <p class="midi-cc-summary"><strong>CC:</strong> ${escapeHtml(ccText)}</p>
+    <h3>Optional & dynamic features</h3>
+    ${features}
+    ${audit.notes.length ? `<ul class="midi-audit-notes">${audit.notes.map((note) => `<li>${escapeHtml(note)}</li>`).join('')}</ul>` : ''}
+  `;
+}
+
+function auditedCapabilityStatus(project: ProjectSummary, kind: 'velocity' | 'aftertouch' | 'pitchBend'): string {
+  const audit = getMidiCapabilityAudit(project.id);
+  if (!audit) {
+    if (kind === 'velocity') return yesNo(project.capabilities.velocity);
+    if (kind === 'aftertouch') return yesNo(project.capabilities.aftertouch);
+    return yesNo(project.capabilities.pitchBend);
+  }
+
+  if (kind === 'velocity') {
+    const velocity = audit.features.find((feature) => feature.id === 'velocity');
+    return velocity ? midiCapabilityLabel(velocity.status) : yesNo(project.capabilities.velocity);
+  }
+  if (kind === 'aftertouch') {
+    return midiCapabilityLabel(audit.messageSupport.channelAftertouch ?? 'unknown');
+  }
+  return midiCapabilityLabel(audit.messageSupport.pitchBend ?? 'unknown');
 }
 
 export function renderProjectPage(outlet: HTMLElement, params: Record<string, string> = {}): void {
@@ -151,23 +227,23 @@ export function renderProjectPage(outlet: HTMLElement, params: Record<string, st
         <p class="eyebrow">Electrical</p><h2>Power</h2>${powerRows(project)}
       </section>
 
-      <section class="two-column-section">
+      <section class="two-column-section two-column-section--midi">
         <div class="detail-section">
           <p class="eyebrow">MIDI</p><h2>Reception & messages</h2>
           <div class="capability-chips capability-chips--detail">${renderMidiInputBadges(project.midi.transports)}</div>
           <div class="spec-list midi-transport-list">${project.midi.transports.length ? project.midi.transports.map((transport) => `<div class="spec-row"><div><strong>${escapeHtml(labelize(transport.id))}</strong><span>${escapeHtml(labelize(transport.status))}</span></div><div>${escapeHtml(labelize(transport.direction))}</div></div>`).join('') : '<p class="muted">No MIDI transport documented.</p>'}</div>
-          <h3>Messages</h3><ul>${list(project.midi.messages)}</ul>
+          ${renderAuditedMidi(project)}
         </div>
         <div class="detail-section">
           <p class="eyebrow">Capabilities</p><h2>Musical limits</h2>
           <div class="fact-strip fact-strip--compact">
             <div><span>MIDI range</span><strong>${escapeHtml(range)}</strong></div>
             <div><span>Polyphony</span><strong>${project.capabilities.polyphony ?? 'Unknown'}</strong></div>
-            <div><span>Velocity</span><strong>${yesNo(project.capabilities.velocity)}</strong></div>
-            <div><span>Aftertouch</span><strong>${yesNo(project.capabilities.aftertouch)}</strong></div>
-            <div><span>Pitch bend</span><strong>${yesNo(project.capabilities.pitchBend)}</strong></div>
+            <div><span>Velocity</span><strong>${escapeHtml(auditedCapabilityStatus(project, 'velocity'))}</strong></div>
+            <div><span>Channel AT</span><strong>${escapeHtml(auditedCapabilityStatus(project, 'aftertouch'))}</strong></div>
+            <div><span>Pitch bend</span><strong>${escapeHtml(auditedCapabilityStatus(project, 'pitchBend'))}</strong></div>
           </div>
-          ${project.capabilities.supportedCC.length ? `<p><strong>CC:</strong> ${project.capabilities.supportedCC.join(', ')}</p>` : ''}
+          ${!getMidiCapabilityAudit(project.id) && project.capabilities.supportedCC.length ? `<p><strong>CC:</strong> ${project.capabilities.supportedCC.join(', ')}</p>` : ''}
         </div>
       </section>
 

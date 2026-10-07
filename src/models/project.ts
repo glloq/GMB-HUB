@@ -2,6 +2,7 @@ export type ProjectType = 'instrument' | 'controller' | 'software' | 'utility' |
 export type Maturity = 'concept' | 'software-ready' | 'bench-ready' | 'hardware-tested' | 'validated' | 'legacy' | 'archived';
 export type EvidenceStatus = 'unknown' | 'planned' | 'implemented' | 'tested' | 'not-tested' | 'partial' | 'documented';
 export type GmbState = 'native' | 'partial' | 'planned' | 'legacy' | 'none' | 'unknown';
+export type MidiCapabilityStatus = 'supported' | 'unsupported' | 'dynamic' | 'optional' | 'unknown';
 
 export interface ProjectLink {
   kind: string;
@@ -14,6 +15,28 @@ export interface MidiTransport {
   id: string;
   status: 'unknown' | 'planned' | 'implemented' | 'experimental' | 'legacy' | 'unsupported';
   direction: 'input' | 'output' | 'bidirectional' | 'unknown';
+  notes?: string | null;
+}
+
+export interface MidiMessageSupport {
+  noteOn?: MidiCapabilityStatus;
+  noteOff?: MidiCapabilityStatus;
+  controlChange?: MidiCapabilityStatus;
+  programChange?: MidiCapabilityStatus;
+  pitchBend?: MidiCapabilityStatus;
+  channelAftertouch?: MidiCapabilityStatus;
+  polyAftertouch?: MidiCapabilityStatus;
+  clock?: MidiCapabilityStatus;
+  start?: MidiCapabilityStatus;
+  continue?: MidiCapabilityStatus;
+  stop?: MidiCapabilityStatus;
+  systemReset?: MidiCapabilityStatus;
+}
+
+export interface MidiFeature {
+  id: string;
+  label: string;
+  status: MidiCapabilityStatus;
   notes?: string | null;
 }
 
@@ -48,7 +71,12 @@ export interface ProjectSummary {
   families: string[];
   supportedInstruments: string[];
   controller: { boardIds: string[]; notes: string[] };
-  midi: { transports: MidiTransport[]; messages: string[] };
+  midi: {
+    transports: MidiTransport[];
+    messages: string[];
+    messageSupport?: MidiMessageSupport;
+    features?: MidiFeature[];
+  };
   gmb: {
     state: GmbState;
     protocolVersion: number | null;

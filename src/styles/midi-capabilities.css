@@ -1,0 +1,23 @@
+.two-column-section--midi { align-items: start; }
+.midi-audit-heading { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem; margin-top: 1rem; }
+.midi-audit-heading h3 { margin-bottom: .35rem; }
+.midi-audit-heading small { color: var(--muted); font-size: .7rem; white-space: nowrap; }
+.midi-message-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .35rem; margin: .55rem 0 .75rem; }
+.midi-message-row { display: flex; align-items: center; justify-content: space-between; gap: .6rem; min-height: 34px; padding: .42rem .5rem; border: 1px solid var(--border); border-radius: .55rem; background: color-mix(in srgb, var(--bg) 76%, transparent); font-size: .78rem; }
+.midi-state { display: inline-flex; align-items: center; justify-content: center; min-width: 66px; padding: .2rem .42rem; border: 1px solid var(--border); border-radius: 999px; font-size: .66rem; font-weight: 800; letter-spacing: .015em; white-space: nowrap; }
+.midi-state--supported { color: #76e7b0; border-color: color-mix(in srgb, #35c98a 55%, var(--border)); background: color-mix(in srgb, #35c98a 12%, transparent); }
+.midi-state--dynamic { color: #72d9ff; border-color: color-mix(in srgb, #26bde8 55%, var(--border)); background: color-mix(in srgb, #26bde8 12%, transparent); }
+.midi-state--optional { color: #f6c96b; border-color: color-mix(in srgb, #e8a72d 55%, var(--border)); background: color-mix(in srgb, #e8a72d 12%, transparent); }
+.midi-state--unsupported { color: #ff8b96; border-color: color-mix(in srgb, #e85868 50%, var(--border)); background: color-mix(in srgb, #e85868 10%, transparent); }
+.midi-state--unknown { color: var(--muted); background: color-mix(in srgb, var(--surface) 65%, transparent); }
+.midi-cc-summary { margin: .55rem 0 1rem; color: var(--muted); font-size: .78rem; }
+.midi-feature-grid { display: grid; gap: .35rem; }
+.midi-feature-card { display: flex; align-items: start; justify-content: space-between; gap: .75rem; padding: .5rem .55rem; border-bottom: 1px solid color-mix(in srgb, var(--border) 70%, transparent); }
+.midi-feature-card:last-child { border-bottom: 0; }
+.midi-feature-card strong { display: block; font-size: .78rem; }
+.midi-feature-card small { display: block; margin-top: .15rem; color: var(--muted); font-size: .68rem; line-height: 1.35; }
+.midi-audit-notes { margin-top: .75rem !important; color: var(--muted); font-size: .74rem; }
+@media (max-width: 760px) {
+  .midi-message-grid { grid-template-columns: 1fr; }
+  .midi-audit-heading { align-items: flex-start; flex-direction: column; gap: .15rem; }
+}

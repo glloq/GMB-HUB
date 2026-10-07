@@ -1,0 +1,327 @@
+{
+  "auditDate": "2026-10-07",
+  "method": "Runtime code and active controller behavior take precedence over parser enums and README claims. Unknown means insufficient evidence; unsupported means an explicit no-op or unhandled runtime path.",
+  "projects": {
+    "servo-flute-gmb": {
+      "messageSupport": {
+        "noteOn": "supported",
+        "noteOff": "supported",
+        "controlChange": "dynamic",
+        "programChange": "unknown",
+        "pitchBend": "unsupported",
+        "channelAftertouch": "unsupported",
+        "polyAftertouch": "unsupported",
+        "clock": "unknown",
+        "start": "unknown",
+        "continue": "unknown",
+        "stop": "unknown",
+        "systemReset": "unknown"
+      },
+      "supportedCC": [1, 2, 7, 11, 73, 74],
+      "features": [
+        {"id":"velocity","label":"Velocity → airflow","status":"dynamic","notes":"Only active when airVelocityResponse produces a real effect."},
+        {"id":"vibrato","label":"CC1 vibrato","status":"dynamic","notes":"Advertised only when vibrato amplitude is active."},
+        {"id":"breath","label":"CC2 breath","status":"optional","notes":"Available when the breath controller is enabled."},
+        {"id":"attack-shape","label":"CC73 attack shape","status":"supported"},
+        {"id":"jet-angle","label":"CC74 jet angle","status":"optional","notes":"Transverse-flute configuration with angle servo only."},
+        {"id":"mechanical-prepare","label":"Mechanical preparation timing","status":"supported"},
+        {"id":"half-holes","label":"Half-hole fingering","status":"optional"},
+        {"id":"micro-calibration","label":"Microphone calibration","status":"optional"}
+      ],
+      "notes": ["GMB v2 descriptor is generated from the active validated configuration; capabilities must not be treated as a fixed project profile."]
+    },
+    "drums-engine-gmb": {
+      "messageSupport": {
+        "noteOn": "supported",
+        "noteOff": "supported",
+        "controlChange": "dynamic",
+        "programChange": "unknown",
+        "pitchBend": "dynamic",
+        "channelAftertouch": "dynamic",
+        "polyAftertouch": "unsupported",
+        "clock": "unknown",
+        "start": "unknown",
+        "continue": "unknown",
+        "stop": "unknown",
+        "systemReset": "unknown"
+      },
+      "supportedCC": [],
+      "features": [
+        {"id":"velocity","label":"Velocity-sensitive strikes","status":"dynamic","notes":"Declared only when the compiled actuator pipeline actually changes strike behavior with velocity."},
+        {"id":"hihat","label":"Hi-hat pedal routing","status":"dynamic"},
+        {"id":"choke-groups","label":"Choke / mute groups","status":"dynamic"},
+        {"id":"pitch-control","label":"Pitch/tension control","status":"dynamic"},
+        {"id":"mechanical-prepare","label":"Mechanical preparation timing","status":"dynamic"},
+        {"id":"power-budget","label":"Power-budget polyphony limits","status":"supported"}
+      ],
+      "notes": ["Capabilities are derived from the compiled active routing table, including real CC routes, mechanisms and per-channel constraints."]
+    },
+    "playmode-gmb": {
+      "messageSupport": {
+        "noteOn": "supported",
+        "noteOff": "supported",
+        "controlChange": "dynamic",
+        "programChange": "unsupported",
+        "pitchBend": "unsupported",
+        "channelAftertouch": "unsupported",
+        "polyAftertouch": "unsupported",
+        "clock": "unknown",
+        "start": "unknown",
+        "continue": "unknown",
+        "stop": "unknown",
+        "systemReset": "unknown"
+      },
+      "supportedCC": [],
+      "features": [
+        {"id":"servo-mode","label":"Servo actuator mode","status":"supported"},
+        {"id":"solenoid-mode","label":"Solenoid actuator mode","status":"supported"},
+        {"id":"cc-mapping","label":"Configurable CC mappings","status":"supported"},
+        {"id":"velocity-curves","label":"Velocity curves","status":"supported"},
+        {"id":"power-budget","label":"Power / resource budgets","status":"supported"},
+        {"id":"latency","label":"Actuator latency model","status":"supported"},
+        {"id":"acoustic-calibration","label":"Acoustic calibration","status":"optional"},
+        {"id":"panic","label":"Panic / safety handling","status":"supported"}
+      ],
+      "notes": ["The internal MIDI type can represent more messages, but the runtime dispatcher currently executes only Note On, Note Off and Control Change."]
+    },
+    "servo-plucked-strings-gmb": {
+      "messageSupport": {
+        "noteOn": "supported",
+        "noteOff": "supported",
+        "controlChange": "supported",
+        "programChange": "unknown",
+        "pitchBend": "unknown",
+        "channelAftertouch": "unknown",
+        "polyAftertouch": "unknown",
+        "clock": "unknown",
+        "start": "unknown",
+        "continue": "unknown",
+        "stop": "unknown",
+        "systemReset": "unknown"
+      },
+      "supportedCC": [7, 11, 120, 123],
+      "features": [
+        {"id":"velocity","label":"Velocity → pluck intensity","status":"supported"},
+        {"id":"sustain","label":"Configurable sustain CC","status":"optional"},
+        {"id":"string-fret-select","label":"String / fret pre-positioning CC","status":"supported"},
+        {"id":"chord-allocation","label":"Chord/string allocation","status":"supported"},
+        {"id":"fault-fallback","label":"Faulty-string fallback","status":"supported"}
+      ],
+      "notes": ["No runtime effect for Pitch Bend, aftertouch or Program Change was found in the audited InstrumentController; these remain unknown rather than being forced false."]
+    },
+    "stepper-plucked-strings-gmb": {
+      "messageSupport": {
+        "noteOn": "supported",
+        "noteOff": "supported",
+        "controlChange": "supported",
+        "programChange": "unknown",
+        "pitchBend": "unknown",
+        "channelAftertouch": "unknown",
+        "polyAftertouch": "unknown",
+        "clock": "unknown",
+        "start": "unknown",
+        "continue": "unknown",
+        "stop": "unknown",
+        "systemReset": "unknown"
+      },
+      "supportedCC": [7, 11, 120, 123],
+      "features": [
+        {"id":"velocity","label":"Velocity-sensitive pluck","status":"supported"},
+        {"id":"sustain","label":"Configurable sustain CC","status":"optional"},
+        {"id":"string-fret-select","label":"String / fret pre-positioning CC","status":"supported"},
+        {"id":"homing","label":"Stepper homing","status":"supported"},
+        {"id":"capo-transpose","label":"Capo / transposition support","status":"supported"},
+        {"id":"chord-allocation","label":"Chord/string allocation","status":"supported"},
+        {"id":"safety","label":"Motion safety handling","status":"supported"}
+      ],
+      "notes": ["No runtime effect for Pitch Bend, aftertouch or Program Change was found in the audited controller."]
+    },
+    "servo-bowed-strings-gmb": {
+      "messageSupport": {
+        "noteOn": "supported",
+        "noteOff": "supported",
+        "controlChange": "supported",
+        "programChange": "unknown",
+        "pitchBend": "unknown",
+        "channelAftertouch": "unknown",
+        "polyAftertouch": "unknown",
+        "clock": "unknown",
+        "start": "unknown",
+        "continue": "unknown",
+        "stop": "unknown",
+        "systemReset": "unknown"
+      },
+      "supportedCC": [7, 11, 120, 123],
+      "features": [
+        {"id":"velocity","label":"Velocity-sensitive bowing","status":"supported"},
+        {"id":"continuous-expression","label":"CC7 / CC11 on held notes","status":"supported"},
+        {"id":"sustain","label":"Configurable sustain CC","status":"optional"},
+        {"id":"string-fret-select","label":"String / fret pre-positioning CC","status":"supported"},
+        {"id":"fault-fallback","label":"Faulty-string fallback","status":"supported"}
+      ],
+      "notes": ["No runtime Pitch Bend, aftertouch or Program Change effect was found in the audited controller."]
+    },
+    "stepper-bowed-strings-gmb": {
+      "messageSupport": {
+        "noteOn": "supported",
+        "noteOff": "supported",
+        "controlChange": "supported",
+        "programChange": "unknown",
+        "pitchBend": "unknown",
+        "channelAftertouch": "supported",
+        "polyAftertouch": "unknown",
+        "clock": "unknown",
+        "start": "unknown",
+        "continue": "unknown",
+        "stop": "unknown",
+        "systemReset": "unknown"
+      },
+      "supportedCC": [1, 7, 11, 120, 123],
+      "features": [
+        {"id":"velocity","label":"Velocity-sensitive bowing","status":"supported"},
+        {"id":"bow-modulation","label":"CC1 bow modulation / crescendo","status":"supported"},
+        {"id":"continuous-expression","label":"CC7 / CC11 continuous dynamics","status":"supported"},
+        {"id":"aftertouch-dynamics","label":"Channel Aftertouch dynamics","status":"supported"},
+        {"id":"continuous-dynamics","label":"Immediate held-note updates","status":"optional","notes":"Controlled by the continuousDynamics configuration."},
+        {"id":"sustain","label":"Configurable sustain CC","status":"optional"}
+      ],
+      "notes": ["Channel Aftertouch is applied to the live bow-dynamics calculation; this is real runtime support, not parser-only support."]
+    },
+    "slide-whistle-gmb": {
+      "messageSupport": {
+        "noteOn": "supported",
+        "noteOff": "supported",
+        "controlChange": "dynamic",
+        "programChange": "unknown",
+        "pitchBend": "dynamic",
+        "channelAftertouch": "dynamic",
+        "polyAftertouch": "unsupported",
+        "clock": "unknown",
+        "start": "unknown",
+        "continue": "unknown",
+        "stop": "unknown",
+        "systemReset": "unknown"
+      },
+      "supportedCC": [1],
+      "features": [
+        {"id":"velocity","label":"Velocity → airflow","status":"dynamic"},
+        {"id":"pitch-range","label":"Pitch Bend range","status":"dynamic","notes":"Descriptor reports the active range; typically ±2 semitones by default."},
+        {"id":"aftertouch","label":"Channel Aftertouch expression","status":"dynamic"},
+        {"id":"air-expression","label":"Breath / expression / airflow CC","status":"dynamic"},
+        {"id":"vibrato","label":"Vibrato control","status":"dynamic"},
+        {"id":"sustain","label":"Sustain","status":"optional"},
+        {"id":"angle-control","label":"Air / angle control","status":"optional"}
+      ],
+      "notes": ["Capabilities depend on the active mechanical configuration and must be read dynamically from the GMB descriptor."]
+    },
+    "servo-melodica-gmb": {
+      "messageSupport": {
+        "noteOn": "supported",
+        "noteOff": "supported",
+        "controlChange": "supported",
+        "programChange": "unsupported",
+        "pitchBend": "unsupported",
+        "channelAftertouch": "unsupported",
+        "polyAftertouch": "unsupported",
+        "clock": "unsupported",
+        "start": "unsupported",
+        "continue": "unsupported",
+        "stop": "supported",
+        "systemReset": "supported"
+      },
+      "supportedCC": [7, 11, 64, 120, 121, 123],
+      "features": [
+        {"id":"velocity","label":"Velocity → air intensity","status":"supported"},
+        {"id":"sustain","label":"CC64 sustain","status":"supported"},
+        {"id":"all-sound-off","label":"CC120 All Sound Off","status":"supported"},
+        {"id":"reset-controllers","label":"CC121 Reset Controllers","status":"supported"},
+        {"id":"all-notes-off","label":"CC123 All Notes Off","status":"supported"},
+        {"id":"stop-safety","label":"Stop → all notes off","status":"supported"},
+        {"id":"reset-safety","label":"System Reset → panic","status":"supported"}
+      ],
+      "notes": ["The internal event type can represent most MIDI 1.0 messages, but Pitch Bend, Program Change and both aftertouch families are explicit no-ops in the musical controller."]
+    },
+    "orchestrion-trumpet": {
+      "messageSupport": {
+        "noteOn": "supported",
+        "noteOff": "supported",
+        "controlChange": "supported",
+        "programChange": "optional",
+        "pitchBend": "supported",
+        "channelAftertouch": "supported",
+        "polyAftertouch": "unknown",
+        "clock": "unsupported",
+        "start": "unsupported",
+        "continue": "unsupported",
+        "stop": "unsupported",
+        "systemReset": "supported"
+      },
+      "supportedCC": [1, 2, 6, 7, 11, 64, 100, 101, 120, 121, 123],
+      "features": [
+        {"id":"vibrato","label":"CC1 modulation / vibrato","status":"supported"},
+        {"id":"breath","label":"CC2 breath","status":"supported"},
+        {"id":"sustain","label":"CC64 sustain","status":"supported"},
+        {"id":"pitch-bend","label":"Configurable Pitch Bend","status":"supported","notes":"±1/±2/±3/±12 semitones; default ±2."},
+        {"id":"channel-pressure","label":"Channel Pressure expression","status":"supported"},
+        {"id":"pb-sensitivity","label":"RPN 0 Pitch Bend Sensitivity","status":"supported"},
+        {"id":"voicings","label":"Program Change voicings","status":"optional","notes":"Only when saved-voicing selection is enabled."},
+        {"id":"system-reset","label":"System Reset safety","status":"supported"}
+      ],
+      "notes": ["Program Change is conditional; it must not be advertised as universally supported when the voicing option is disabled."]
+    },
+    "accordion-servo-midi": {
+      "messageSupport": {
+        "noteOn": "supported",
+        "noteOff": "supported",
+        "controlChange": "supported",
+        "programChange": "unsupported",
+        "pitchBend": "unsupported",
+        "channelAftertouch": "unsupported",
+        "polyAftertouch": "unsupported",
+        "clock": "unsupported",
+        "start": "unsupported",
+        "continue": "unsupported",
+        "stop": "unsupported",
+        "systemReset": "unsupported"
+      },
+      "supportedCC": [7, 11, 64, 120, 123],
+      "features": [
+        {"id":"sustain","label":"CC64 sustain","status":"supported"},
+        {"id":"volume-expression","label":"CC7 / CC11 expression","status":"supported"},
+        {"id":"all-notes-off","label":"CC120 / CC123 safety","status":"supported"},
+        {"id":"bellows","label":"Stepper bellows control","status":"supported"},
+        {"id":"homing","label":"Optical homing","status":"supported"},
+        {"id":"mechanical-polyphony","label":"Mechanical polyphony limit","status":"supported"}
+      ],
+      "notes": ["Other channel-message families are ignored by the audited MIDI handler. Hardware validation remains separate from software support."]
+    },
+    "harmonica-midi": {
+      "messageSupport": {
+        "noteOn": "supported",
+        "noteOff": "supported",
+        "controlChange": "supported",
+        "programChange": "unsupported",
+        "pitchBend": "supported",
+        "channelAftertouch": "unsupported",
+        "polyAftertouch": "unsupported",
+        "clock": "unsupported",
+        "start": "unsupported",
+        "continue": "unsupported",
+        "stop": "unsupported",
+        "systemReset": "unsupported"
+      },
+      "supportedCC": [],
+      "features": [
+        {"id":"velocity","label":"Velocity → intensity","status":"optional","notes":"Only when velocityToIntensity is enabled."},
+        {"id":"breath","label":"Breath control","status":"supported"},
+        {"id":"expression","label":"Expression control","status":"supported"},
+        {"id":"vibrato","label":"Modulation / vibrato","status":"supported"},
+        {"id":"pitch-bend","label":"Pitch Bend ±2 semitones","status":"supported"},
+        {"id":"blow-draw","label":"Blow / draw direction arbitration","status":"supported"},
+        {"id":"polyphony","label":"Configurable polyphony","status":"supported"},
+        {"id":"air-systems","label":"Optional air systems","status":"optional"}
+      ],
+      "notes": ["Program Change and both aftertouch families are consumed by the parser only to preserve the MIDI stream; they are not forwarded to the note engine."]
+    }
+  }
+}

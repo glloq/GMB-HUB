@@ -1,12 +1,32 @@
 # GMB HUB
 
-GMB HUB is the static portal for the General MIDI Boop ecosystem: mechanical MIDI instruments, generic controllers, software, build resources, and eventually direct ESP32 flashing from the browser.
+**Explore the GMB ecosystem:** https://glloq.github.io/GMB-HUB/
+
+GMB HUB is the static portal for the **General MIDI Boop ecosystem**: mechanical MIDI instruments, GMB-compatible controllers, software, build resources, MIDI capabilities, hardware requirements, project repositories, and eventually direct ESP32 flashing from the browser.
+
+General MIDI Boop is the central orchestration system. GMB HUB presents the instruments and tools designed to work around it, so the whole ecosystem can be explored from one place.
+
+## Live site
+
+**[Open GMB HUB](https://glloq.github.io/GMB-HUB/)**
 
 ## Core rule
 
-GMB HUB is **100% static** and must run from GitHub Pages. There is no production backend, database, server-side session, serverless function, or mandatory external API.
+GMB HUB is **100% static** and runs from GitHub Pages. There is no production backend, database, server-side session, serverless function, or mandatory external API.
 
 If the generated `dist/` folder is copied to any static HTTP host, the site must still work.
+
+## What the HUB contains
+
+- General MIDI Boop as the central orchestration system
+- GMB-compatible mechanical MIDI instruments
+- ESP32, Arduino and Raspberry Pi controller families
+- supported MIDI transports and message capabilities
+- hardware, mechanics, actuators, sensors and power requirements
+- project maturity and hardware-validation status
+- links to the original GitHub repositories
+- comparison and build-assistant tools running entirely in the browser
+- preparation for direct ESP32 flashing with Web Serial/esptool-js
 
 ## Architecture
 
@@ -19,6 +39,6 @@ If the generated `dist/` folder is copied to any static HTTP host, the site must
 
 ## Current stage
 
-This branch contains the project skeleton only. Product data and full UI implementation are intentionally deferred to the next phase.
+The catalog, GMB presentation, instrument pages, search/filtering, comparison tools and build assistant are already implemented. The current work focuses on improving the compact visual presentation, completing verified project data and media, and preparing validated firmware manifests for browser-side flashing.
 
 See `docs/ROADMAP.md` and `docs/ARCHITECTURE.md`.
