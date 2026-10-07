@@ -58,7 +58,15 @@
   "firmware": {"available":false,"buildSystems":[],"sourcePath":null,"environments":[]},
   "flash": {"supported":false,"targets":[]},
   "postFlash": {"localUrl":null,"setupSsidPattern":null,"steps":[]},
-  "media": {"thumbnail":null,"images":[],"videos":[]},
+  "media": {
+    "thumbnail":"https://raw.githubusercontent.com/glloq/General-Midi-Boop/main/docs/images/accueil.png",
+    "images":[
+      {"url":"https://raw.githubusercontent.com/glloq/General-Midi-Boop/main/docs/images/accueil.png","alt":"General MIDI Boop main interface","source":"glloq/General-Midi-Boop","provenance":"docs/images/accueil.png"},
+      {"url":"https://raw.githubusercontent.com/glloq/General-Midi-Boop/main/docs/images/editeur.png","alt":"General MIDI Boop MIDI editor","source":"glloq/General-Midi-Boop","provenance":"docs/images/editeur.png"},
+      {"url":"https://raw.githubusercontent.com/glloq/General-Midi-Boop/main/docs/images/lumiere.png","alt":"General MIDI Boop lighting interface","source":"glloq/General-Midi-Boop","provenance":"docs/images/lumiere.png"}
+    ],
+    "videos":[]
+  },
   "relations": {"replaces":[],"replacedBy":[],"related":["playmode-gmb","drums-engine-gmb","servo-flute-gmb","servo-plucked-strings-gmb","stepper-plucked-strings-gmb","servo-bowed-strings-gmb","stepper-bowed-strings-gmb","slide-whistle-gmb","servo-melodica-gmb","orchestrion-trumpet"]},
   "license": "MIT",
   "warnings": ["RTP-MIDI is currently documented by the project as experimental/degraded rather than fully AppleMIDI-conformant."]
