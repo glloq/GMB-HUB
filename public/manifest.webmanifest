@@ -1,0 +1,9 @@
+{
+  "name": "GMB HUB",
+  "short_name": "GMB HUB",
+  "description": "Open mechanical MIDI instruments and General MIDI Boop ecosystem.",
+  "start_url": "./#/",
+  "display": "standalone",
+  "background_color": "#101216",
+  "theme_color": "#101216"
+}

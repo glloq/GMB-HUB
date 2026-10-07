@@ -1,0 +1,36 @@
+import { renderAboutPage } from './pages/about';
+import { renderBuildPage } from './pages/build';
+import { renderComparePage } from './pages/compare';
+import { renderFlashPage } from './pages/flash';
+import { renderHomePage } from './pages/home';
+import { renderInstrumentsPage } from './pages/instruments';
+import { renderProjectPage } from './pages/project';
+import { renderSoftwarePage } from './pages/software';
+
+type Renderer = (outlet: HTMLElement, params?: Record<string, string>) => void;
+
+const routes: Array<{ pattern: RegExp; render: Renderer; keys?: string[] }> = [
+  { pattern: /^#\/?$/, render: renderHomePage },
+  { pattern: /^#\/instruments\/?$/, render: renderInstrumentsPage },
+  { pattern: /^#\/instruments\/([^/]+)\/?$/, render: renderProjectPage, keys: ['id'] },
+  { pattern: /^#\/software\/?$/, render: renderSoftwarePage },
+  { pattern: /^#\/build\/?$/, render: renderBuildPage },
+  { pattern: /^#\/compare\/?$/, render: renderComparePage },
+  { pattern: /^#\/flash\/?$/, render: renderFlashPage },
+  { pattern: /^#\/about\/?$/, render: renderAboutPage },
+];
+
+export function renderRoute(outlet: HTMLElement | null, hash: string): void {
+  if (!outlet) return;
+  const normalized = hash || '#/';
+
+  for (const route of routes) {
+    const match = normalized.match(route.pattern);
+    if (!match) continue;
+    const params = Object.fromEntries((route.keys ?? []).map((key, index) => [key, match[index + 1] ?? '']));
+    route.render(outlet, params);
+    return;
+  }
+
+  outlet.innerHTML = `<section class="placeholder"><p class="eyebrow">404</p><h1>Page not found</h1><a href="#/">Return home</a></section>`;
+}
