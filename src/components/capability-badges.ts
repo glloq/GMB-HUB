@@ -6,15 +6,21 @@ interface BadgeDefinition {
   token: string;
 }
 
-const BOARD_BADGES: Record<string, BadgeDefinition> = {
-  esp32: { label: 'ESP32', token: '32' },
-  'esp32-wroom-32': { label: 'ESP32-WROOM-32', token: '32' },
-  'esp32-s2': { label: 'ESP32-S2', token: 'S2' },
-  'esp32-s3': { label: 'ESP32-S3', token: 'S3' },
-  'arduino-leonardo': { label: 'Arduino Leonardo', token: 'L' },
-  'arduino-micro': { label: 'Arduino Micro', token: 'µ' },
-  'arduino-uno': { label: 'Arduino Uno', token: 'UNO' },
-  'raspberry-pi': { label: 'Raspberry Pi', token: 'Pi' },
+interface BoardFamilyDefinition {
+  id: string;
+  label: string;
+  image: string;
+}
+
+const BOARD_FAMILIES: Record<string, BoardFamilyDefinition> = {
+  esp32: { id: 'esp32', label: 'ESP32 family', image: 'images/boards/esp32.svg' },
+  'esp32-wroom-32': { id: 'esp32', label: 'ESP32 family', image: 'images/boards/esp32.svg' },
+  'esp32-s2': { id: 'esp32', label: 'ESP32 family', image: 'images/boards/esp32.svg' },
+  'esp32-s3': { id: 'esp32', label: 'ESP32 family', image: 'images/boards/esp32.svg' },
+  'arduino-leonardo': { id: 'arduino', label: 'Arduino family', image: 'images/boards/arduino.svg' },
+  'arduino-micro': { id: 'arduino', label: 'Arduino family', image: 'images/boards/arduino.svg' },
+  'arduino-uno': { id: 'arduino', label: 'Arduino family', image: 'images/boards/arduino.svg' },
+  'raspberry-pi': { id: 'raspberry-pi', label: 'Raspberry Pi family', image: 'images/boards/raspberry-pi.svg' },
 };
 
 const MIDI_BADGES: Record<string, BadgeDefinition> = {
@@ -45,10 +51,33 @@ export function getMidiInputTransports(transports: MidiTransport[]): MidiTranspo
 
 export function renderBoardBadges(boardIds: string[], compact = false): string {
   if (!boardIds.length) return '<span class="capability-empty">Not documented</span>';
-  return boardIds.map((id) => {
-    const badge = BOARD_BADGES[id] ?? fallbackBadge(id);
+
+  const families = new Map<string, { definition: BoardFamilyDefinition; models: string[] }>();
+  const unknown: string[] = [];
+
+  for (const boardId of boardIds) {
+    const family = BOARD_FAMILIES[boardId];
+    if (!family) {
+      unknown.push(boardId);
+      continue;
+    }
+    const existing = families.get(family.id) ?? { definition: family, models: [] };
+    existing.models.push(labelize(boardId));
+    families.set(family.id, existing);
+  }
+
+  const familyMarkup = [...families.values()].map(({ definition, models }) => {
+    const src = `${import.meta.env.BASE_URL}${definition.image}`;
+    const title = `${definition.label}: ${models.join(', ')}`;
+    return `<span class="board-family${compact ? ' board-family--compact' : ''}" title="${escapeHtml(title)}"><img src="${escapeHtml(src)}" alt="${escapeHtml(definition.label)}" loading="lazy" decoding="async"><span>${escapeHtml(definition.label)}</span></span>`;
+  }).join('');
+
+  const fallbackMarkup = unknown.map((id) => {
+    const badge = fallbackBadge(id);
     return `<span class="capability-chip capability-chip--board${compact ? ' capability-chip--compact' : ''}" title="Compatible board: ${escapeHtml(badge.label)}"><b>${escapeHtml(badge.token)}</b><span>${escapeHtml(badge.label)}</span></span>`;
   }).join('');
+
+  return familyMarkup + fallbackMarkup;
 }
 
 export function renderMidiInputBadges(transports: MidiTransport[], compact = false): string {
