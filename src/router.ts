@@ -13,6 +13,7 @@ const routes: Array<{ pattern: RegExp; render: Renderer; keys?: string[] }> = [
   { pattern: /^#\/?$/, render: renderHomePage },
   { pattern: /^#\/instruments\/?$/, render: renderInstrumentsPage },
   { pattern: /^#\/instruments\/([^/]+)\/?$/, render: renderProjectPage, keys: ['id'] },
+  { pattern: /^#\/projects\/([^/]+)\/?$/, render: renderProjectPage, keys: ['id'] },
   { pattern: /^#\/software\/?$/, render: renderSoftwarePage },
   { pattern: /^#\/build\/?$/, render: renderBuildPage },
   { pattern: /^#\/compare\/?$/, render: renderComparePage },
@@ -27,10 +28,11 @@ export function renderRoute(outlet: HTMLElement | null, hash: string): void {
   for (const route of routes) {
     const match = normalized.match(route.pattern);
     if (!match) continue;
-    const params = Object.fromEntries((route.keys ?? []).map((key, index) => [key, match[index + 1] ?? '']));
+    const params = Object.fromEntries((route.keys ?? []).map((key, index) => [key, decodeURIComponent(match[index + 1] ?? '')]));
     route.render(outlet, params);
+    outlet.focus({ preventScroll: true });
     return;
   }
 
-  outlet.innerHTML = `<section class="placeholder"><p class="eyebrow">404</p><h1>Page not found</h1><a href="#/">Return home</a></section>`;
+  outlet.innerHTML = '<section class="empty-state"><p class="eyebrow">404</p><h1>Page not found</h1><a href="#/">Return home</a></section>';
 }
