@@ -9,6 +9,7 @@ import './styles/ecosystem.css';
 import './styles/gmb.css';
 import './styles/palette.css';
 import './styles/midi-capabilities.css';
+import './styles/flow.css';
 import { mountApp } from './app';
 
 mountApp(document.querySelector<HTMLDivElement>('#app'));

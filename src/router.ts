@@ -10,9 +10,9 @@ const routes: Array<{ pattern: RegExp; render: Renderer; keys?: string[] }> = [
   { pattern: /^#\/?$/, render: renderHomePage },
   { pattern: /^#\/gmb\/?$/, render: renderGmbPage },
   { pattern: /^#\/projects\/general-midi-boop\/?$/, render: renderGmbPage },
-  { pattern: /^#\/instruments\/?$/, render: renderInstrumentsPage },
-  { pattern: /^#\/instruments\/([^/]+)\/?$/, render: renderProjectPage, keys: ['id'] },
-  { pattern: /^#\/projects\/([^/]+)\/?$/, render: renderProjectPage, keys: ['id'] },
+  { pattern: /^#\/instruments(?:\?[^#]*)?\/?$/, render: renderInstrumentsPage },
+  { pattern: /^#\/instruments\/([^/?]+)\/?$/, render: renderProjectPage, keys: ['id'] },
+  { pattern: /^#\/projects\/([^/?]+)\/?$/, render: renderProjectPage, keys: ['id'] },
   { pattern: /^#\/flash\/?$/, render: renderFlashPage },
 ];
 

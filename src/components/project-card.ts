@@ -11,32 +11,28 @@ export function renderProjectCard(project: ProjectSummary): string {
         ? 'Standalone'
         : `GMB ${labelize(project.gmb.state)}`;
   const thumbnail = project.media.thumbnail
-    ? `<div class="project-card__media"><img src="${escapeHtml(project.media.thumbnail)}" alt="${escapeHtml(project.name)}" loading="lazy" decoding="async"></div>`
+    ? `<div class="project-card__media"><img src="${escapeHtml(project.media.thumbnail)}" alt="" loading="lazy" decoding="async"></div>`
     : `<div class="project-card__media project-card__media--placeholder" aria-hidden="true"><span>${escapeHtml(project.name.slice(0, 2).toUpperCase())}</span></div>`;
   const family = project.families[0] ?? 'generic';
 
   return `
-    <article class="project-card" data-family="${escapeHtml(family)}" data-gmb="${escapeHtml(project.gmb.state)}">
-      <a class="project-card__media-link" href="#/projects/${encodeURIComponent(project.id)}" aria-label="Open ${escapeHtml(project.name)}">
-        ${thumbnail}
-      </a>
+    <a class="project-card" data-family="${escapeHtml(family)}" data-gmb="${escapeHtml(project.gmb.state)}" href="#/projects/${encodeURIComponent(project.id)}" aria-label="Open ${escapeHtml(project.name)}">
+      ${thumbnail}
       <div class="project-card__body">
         <div class="project-card__heading">
-          <h2><a href="#/projects/${encodeURIComponent(project.id)}">${escapeHtml(project.name)}</a></h2>
+          <h2>${escapeHtml(project.name)}</h2>
           <span class="badge badge--gmb">${escapeHtml(gmb)}</span>
         </div>
         <p class="project-card__summary">${escapeHtml(project.summary)}</p>
-        <div class="project-card__capabilities">
-          <span class="capability-group__label">HW</span>
+        <div class="project-card__capabilities" aria-label="Hardware and MIDI">
           <div class="capability-chips">${renderBoardBadges(project.controller.boardIds, true)}</div>
-          <span class="capability-group__label">MIDI</span>
           <div class="capability-chips">${renderMidiInputBadges(project.midi.transports, true)}</div>
         </div>
         <div class="project-card__footer">
-          <span class="project-card__status">${escapeHtml(labelize(project.status.maturity))}</span>
-          <a class="project-card__repo" href="${escapeHtml(project.repository.url)}" target="_blank" rel="noreferrer">GitHub ↗</a>
+          <span>${escapeHtml(labelize(family))}</span>
+          <span>${escapeHtml(labelize(project.status.maturity))}</span>
         </div>
       </div>
-    </article>
+    </a>
   `;
 }
