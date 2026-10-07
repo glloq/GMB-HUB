@@ -13,9 +13,10 @@ export function renderProjectCard(project: ProjectSummary): string {
   const thumbnail = project.media.thumbnail
     ? `<div class="project-card__media"><img src="${escapeHtml(project.media.thumbnail)}" alt="${escapeHtml(project.name)}" loading="lazy" decoding="async"></div>`
     : `<div class="project-card__media project-card__media--placeholder" aria-hidden="true"><span>${escapeHtml(project.name.slice(0, 2).toUpperCase())}</span></div>`;
+  const family = project.families[0] ?? 'generic';
 
   return `
-    <article class="project-card">
+    <article class="project-card" data-family="${escapeHtml(family)}" data-gmb="${escapeHtml(project.gmb.state)}">
       <a class="project-card__media-link" href="#/projects/${encodeURIComponent(project.id)}" aria-label="Open ${escapeHtml(project.name)}">
         ${thumbnail}
       </a>
