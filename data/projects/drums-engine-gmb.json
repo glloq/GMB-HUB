@@ -1,0 +1,39 @@
+{
+  "id": "drums-engine-gmb",
+  "name": "Drums Engine GMB",
+  "shortName": null,
+  "type": "instrument",
+  "summary": "ESP32 real-time engine for robotic percussion with browser-based configuration.",
+  "description": null,
+  "repository": {"owner":"glloq","name":"Drums-Engine-GMB","url":"https://github.com/glloq/Drums-Engine-GMB","visibility":"public"},
+  "status": {"maturity":"software-ready","software":"implemented","hardware":"unknown","documentation":"documented","gmb":"implemented"},
+  "families": ["percussion"],
+  "supportedInstruments": ["drums","robotic-percussion"],
+  "controller": {"boardIds":["esp32"],"notes":[]},
+  "midi": {"transports":[],"messages":["note-on","note-off","control-change","sysex"]},
+  "gmb": {"state":"native","protocolVersion":2,"automaticDiscovery":true,"capabilityDescriptor":true,"changeNotification":true,"notes":["README documents handshake block 0x01, descriptor block 0x10 and configuration-change notification block 0x11."]},
+  "mechanics": {"summary":"Configurable robotic percussion engine; exact physical mechanism depends on the configured percussion actuators.","axes":null,"requires3dPrinting":null,"requiresLaserCutting":null,"requiresCnc":null,"requiresWoodworking":null,"calibrationRequired":true,"homingRequired":null,"notes":[]},
+  "actuators": [
+    {"typeId":"servo","quantity":null,"role":"Percussion actuation","driver":null,"notes":null},
+    {"typeId":"solenoid","quantity":null,"role":"Percussion actuation","driver":null,"notes":null}
+  ],
+  "drivers": [],
+  "sensors": [],
+  "power": {"supplies":[],"notes":[]},
+  "capabilities": {"noteRange":null,"polyphony":null,"velocity":null,"aftertouch":null,"pitchBend":null,"supportedCC":[]},
+  "build": {"difficulty":null,"estimatedCost":null,"estimatedBuildTimeHours":null,"tools":[]},
+  "resources": [{"kind":"repository","label":"GitHub repository","url":"https://github.com/glloq/Drums-Engine-GMB"}],
+  "documentation": [
+    {"kind":"readme","label":"Project README","url":"https://github.com/glloq/Drums-Engine-GMB/blob/main/README.md"},
+    {"kind":"documentation","label":"System status","url":"https://github.com/glloq/Drums-Engine-GMB/blob/main/docs/system-status.md"},
+    {"kind":"documentation","label":"GMB protocol","url":"https://github.com/glloq/Drums-Engine-GMB/blob/main/docs/gmb-protocol.md"},
+    {"kind":"documentation","label":"Wiring page","url":"https://github.com/glloq/Drums-Engine-GMB/blob/main/docs/wiring-page.md"}
+  ],
+  "firmware": {"available":true,"buildSystems":["PlatformIO","Arduino IDE"],"sourcePath":"engine","environments":[]},
+  "flash": {"supported":false,"targets":[]},
+  "postFlash": {"localUrl":"http://midipercussion.local","setupSsidPattern":"MidiPerc-Setup","steps":["Restart the ESP32.","Connect to the setup access point.","Configure Wi-Fi and the percussion mapping from the embedded web interface."]},
+  "media": {"thumbnail":null,"images":[],"videos":[]},
+  "relations": {"replaces":[],"replacedBy":[],"related":["general-midi-boop","playmode-gmb"]},
+  "license": "MIT",
+  "warnings": []
+}
