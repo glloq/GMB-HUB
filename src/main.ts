@@ -6,6 +6,7 @@ import './styles/media.css';
 import './styles/theme.css';
 import './styles/capabilities.css';
 import './styles/compact.css';
+import './styles/ecosystem.css';
 import { mountApp } from './app';
 
 mountApp(document.querySelector<HTMLDivElement>('#app'));
