@@ -37,7 +37,7 @@ nav a { padding: .38rem .55rem; font-size: .86rem; }
 .project-card__summary { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; font-size: .82rem; line-height: 1.42 !important; min-height: 2.35em; }
 .project-card__action { margin-top: .1rem; width: fit-content; }
 
-.filters { gap: .5rem; padding: .7rem; margin-bottom: .65rem; }
+.filters { grid-template-columns: minmax(190px, 1.5fr) repeat(6, minmax(115px, 1fr)); gap: .5rem; padding: .7rem; margin-bottom: .65rem; }
 .filters label, .compare-picker label, .build-assistant label { font-size: .7rem; }
 .filters input, .filters select, .compare-picker select, .build-assistant select { min-height: 36px; padding: .42rem .55rem; font-size: .82rem; }
 .results-bar { margin: .65rem 0; font-size: .82rem; }
@@ -79,7 +79,9 @@ nav a { padding: .38rem .55rem; font-size: .86rem; }
 .selection-chips { margin: .7rem 0; }
 .comparison-table th, .comparison-table td { padding: .58rem; font-size: .8rem; }
 
+@media (max-width: 1120px) { .filters { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 @media (max-width: 900px) {
+  .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hero { padding-top: 2rem; }
   .project-card__media { max-height: 135px; }
 }
@@ -92,3 +94,5 @@ nav a { padding: .38rem .55rem; font-size: .86rem; }
   .project-card__media { max-height: none; }
   .project-media__item, .project-media__item--hero { min-height: 180px; }
 }
+
+@media (max-width: 520px) { .filters { grid-template-columns: 1fr; } }
